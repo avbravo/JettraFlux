@@ -1,0 +1,49 @@
+package io.jettra.espresso.theme;
+
+public class Themes {
+
+    public static ThemeData FlatTheme() {
+        return new ThemeData(
+            "#2196F3", // primary
+            "#FFC107", // secondary
+            "#FAFAFA", // background
+            "#FFFFFF", // surface
+            "#FFFFFF", // onPrimary
+            "#212121", // onSurface
+            "border: none; border-radius: 4px; padding: 10px 20px; font-weight: 500; cursor: pointer; transition: background 0.3s;", // button
+            "border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 16px; background-color: #FFFFFF;", // card
+            "padding: 16px; border-radius: 4px;", // container
+            "font-size: 16px; color: #212121;" // text
+        );
+    }
+
+    public static ThemeData Theme3D() {
+        return new ThemeData(
+            "#E0E5EC", 
+            "#FF9800",
+            "#E0E5EC",
+            "#E0E5EC",
+            "#4D4D4D",
+            "#4D4D4D",
+            "border: none; border-radius: 12px; padding: 12px 24px; font-weight: bold; color: #4D4D4D; background-color: #E0E5EC; box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5); cursor: pointer; transition: all 0.2s ease;",
+            "border-radius: 20px; padding: 24px; background-color: #E0E5EC; box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);",
+            "padding: 16px; border-radius: 12px;",
+            "font-size: 16px; color: #4D4D4D; text-shadow: 1px 1px 0px #FFF;"
+        );
+    }
+
+    public static ThemeData FuturisticTheme() {
+        return new ThemeData(
+            "#00F3FF", // neon blue
+            "#FF00E4", // neon pink
+            "#090A0F", // deep dark background
+            "#12141D", // dark surface
+            "#090A0F", // onPrimary (dark text on neon)
+            "#00F3FF", // onSurface (neon text on dark)
+            "border: 1px solid #00F3FF; border-radius: 0px; padding: 12px 24px; font-weight: bold; font-family: monospace; color: #00F3FF; background: transparent; text-transform: uppercase; box-shadow: 0 0 10px rgba(0,243,255,0.5); cursor: pointer; transition: all 0.2s;",
+            "border: 1px solid rgba(255,0,228,0.5); border-radius: 4px; padding: 20px; background: rgba(18,20,29,0.8); box-shadow: inset 0 0 20px rgba(255,0,228,0.1);",
+            "padding: 16px;",
+            "font-size: 16px; color: #00F3FF; font-family: 'Courier New', Courier, monospace;"
+        );
+    }
+}

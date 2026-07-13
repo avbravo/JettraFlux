@@ -1,0 +1,29 @@
+package io.jettra.espresso.widgets;
+
+import io.jettra.espresso.core.Widget;
+import io.jettra.espresso.theme.ThemeData;
+import java.util.Arrays;
+import java.util.List;
+
+public class Alert extends Widget {
+    private final List<Widget> children;
+
+    private Alert(List<Widget> children) {
+        this.children = children;
+    }
+
+    public static Alert of(Widget... children) {
+        return new Alert(Arrays.asList(children));
+    }
+
+    @Override
+    public String render(ThemeData theme) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div ").append(renderCommonAttributes(theme, "espresso-alert")).append(">\n");
+        for (Widget child : children) {
+            sb.append(child.render(theme));
+        }
+        sb.append("</div>\n");
+        return sb.toString();
+    }
+}
