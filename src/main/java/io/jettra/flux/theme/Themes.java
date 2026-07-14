@@ -61,4 +61,34 @@ public class Themes {
             "font-size: 16px; color: #C5C6C7; font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
         );
     }
+
+    public static ThemeData AtlantisTheme() {
+        return new ThemeData(
+            "#3B82F6", // primary (Atlantis Blue)
+            "#6366F1", // secondary (indigo)
+            "#F8FAFC", // background (slate 50)
+            "#FFFFFF", // surface (white)
+            "#FFFFFF", // onPrimary (white text on primary)
+            "#334155", // onSurface (slate 700 text on surface)
+            "border: none; border-radius: 8px; padding: 12px 24px; font-weight: 600; color: #FFFFFF; background-color: #3B82F6; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(59, 130, 246, 0.1); cursor: pointer; transition: all 0.2s ease-in-out;",
+            "border: 1px solid #E2E8F0; border-radius: 16px; padding: 24px; background-color: #FFFFFF; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);",
+            "padding: 24px; border-radius: 16px;",
+            "font-size: 15px; color: #334155; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;"
+        );
+    }
+
+    public static ThemeData OceanTheme() {
+        return new ThemeData(
+            "#20d077", // primary (Mint Green / Teal)
+            "#06b6d4", // secondary (Cyan)
+            "#121212", // background (very dark grey)
+            "#1E1E1E", // surface (dark grey for cards/sidebar/topbar)
+            "#121212", // onPrimary (dark text on bright green buttons)
+            "#E2E8F0", // onSurface (light text)
+            "border: none; border-radius: 8px; padding: 12px 24px; font-weight: 600; color: #121212; background-color: #20d077; box-shadow: 0 4px 6px -1px rgba(32, 208, 119, 0.3); cursor: pointer; transition: all 0.2s ease-in-out;",
+            "border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 24px; background-color: #1E1E1E; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);",
+            "padding: 24px; border-radius: 16px;",
+            "font-size: 15px; color: #E2E8F0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;"
+        );
+    }
 }

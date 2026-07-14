@@ -35,26 +35,35 @@ public class ThemeData {
     // Method to generate a base CSS for the page using this theme
     public String generateGlobalCss() {
         return "<style>\n" +
-               "body { background-color: " + backgroundColor + "; color: " + onSurfaceColor + "; font-family: sans-serif; margin: 0; padding: 0; }\n" +
-               "/* JettraFlux Responsive Grid Layout */\n" +
+               ":root {\n" +
+               "  --primary-color: " + primaryColor + ";\n" +
+               "  --secondary-color: " + secondaryColor + ";\n" +
+               "  --background-color: " + backgroundColor + ";\n" +
+               "  --surface-color: " + surfaceColor + ";\n" +
+               "  --on-primary-color: " + onPrimaryColor + ";\n" +
+               "  --on-surface-color: " + onSurfaceColor + ";\n" +
+               "}\n" +
+               "body { background-color: var(--background-color); color: var(--on-surface-color); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }\n" +
+               "/* JettraFlux Professional Dashboard Layout */\n" +
                ".espresso-dashboard {\n" +
                "  display: grid;\n" +
                "  grid-template-areas: 'top top' 'left center' 'left footer';\n" +
-               "  grid-template-columns: 250px 1fr;\n" +
-               "  grid-template-rows: auto 1fr auto;\n" +
-               "  min-height: 100vh;\n" +
+               "  grid-template-columns: 280px 1fr;\n" +
+               "  grid-template-rows: 70px 1fr auto;\n" +
+               "  height: 100vh;\n" +
+               "  overflow: hidden;\n" +
                "}\n" +
-               ".espresso-top { grid-area: top; width: 100%; box-sizing: border-box; }\n" +
-               ".espresso-left { grid-area: left; height: 100%; box-sizing: border-box; }\n" +
-               ".espresso-center { grid-area: center; overflow: auto; width: 100%; box-sizing: border-box; }\n" +
-               ".espresso-footer { grid-area: footer; width: 100%; box-sizing: border-box; }\n" +
-               "@media (max-width: 768px) {\n" +
+               ".espresso-top { grid-area: top; width: 100%; box-sizing: border-box; background-color: var(--surface-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 10; display: flex; align-items: center; padding: 0 1.5rem; }\n" +
+               ".espresso-left { grid-area: left; height: 100%; box-sizing: border-box; background-color: var(--surface-color); border-right: 1px solid rgba(0,0,0,0.05); z-index: 5; overflow-y: auto; padding: 1.5rem 1rem; }\n" +
+               ".espresso-center { grid-area: center; overflow-y: auto; width: 100%; box-sizing: border-box; padding: 2rem; background-color: var(--background-color); }\n" +
+               ".espresso-footer { grid-area: footer; width: 100%; box-sizing: border-box; padding: 1rem 2rem; text-align: center; background-color: var(--background-color); font-size: 0.875rem; color: #64748b; }\n" +
+               "@media (max-width: 992px) {\n" +
                "  .espresso-dashboard {\n" +
-               "    grid-template-areas: 'top' 'left' 'center' 'footer';\n" +
+               "    grid-template-areas: 'top' 'center' 'footer';\n" +
                "    grid-template-columns: 1fr;\n" +
-               "    grid-template-rows: auto auto 1fr auto;\n" +
+               "    grid-template-rows: 70px 1fr auto;\n" +
                "  }\n" +
-               "  .espresso-left { height: auto; }\n" +
+               "  .espresso-left { display: none; /* Can be handled via a mobile menu toggle later */ }\n" +
                "}\n" +
                "</style>\n";
     }

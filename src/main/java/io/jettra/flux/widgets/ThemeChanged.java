@@ -26,7 +26,7 @@ public class ThemeChanged extends Widget {
         sb.append("  <label style=\"").append(theme.textStyle).append("\">Tema:</label>\n");
         sb.append("  <select onchange=\"changeJettraTheme(this.value)\" style=\"padding: 6px; border-radius: 4px; background: ").append(theme.surfaceColor).append("; color: ").append(theme.onSurfaceColor).append("; border: 1px solid ").append(theme.primaryColor).append(";\">\n");
         
-        String[] themes = {"Ast", "FlatTheme", "Theme3D", "FuturisticTheme"};
+        String[] themes = {"Ast", "FlatTheme", "Theme3D", "FuturisticTheme", "AtlantisTheme", "OceanTheme"};
         for (String t : themes) {
             sb.append("    <option value=\"").append(t).append("\"");
             if (t.equals(currentTheme)) {
