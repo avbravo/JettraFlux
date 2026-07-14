@@ -34,18 +34,49 @@ public class Scaffold extends Widget {
         StringBuilder sb = new StringBuilder();
         sb.append(theme.generateGlobalCss());
         
-        String scaffoldStyle = "display: flex; flex-direction: column; min-height: 100vh; position: relative;";
-        sb.append("<div ").append(renderCommonAttributes(theme, "espresso-scaffold")).append(" style=\"").append(scaffoldStyle).append(" ").append(modifier.getStyles()).append("\">\n");
+        // CSS for hamburger menu
+        sb.append("<style>\n");
+        sb.append(".jettra-scaffold-layout { display: flex; flex-direction: column; min-height: 100vh; position: relative; }\n");
+        sb.append(".jettra-topbar { width: 100%; box-sizing: border-box; display: flex; align-items: center; padding: 0 16px; }\n");
+        sb.append(".jettra-main-viewport { flex: 1; overflow: auto; padding: 16px; margin-top: -10px; box-sizing: border-box; display: flex; justify-content: center; }\n"); // Elevated position for visual balance
+        sb.append(".jettra-hamburger { display: none; cursor: pointer; font-size: 24px; margin-right: 16px; }\n");
+        sb.append(".jettra-drawer { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; background: white; border: 1px solid #ccc; width: 250px; z-index: 1001; padding: 16px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }\n");
+        sb.append(".jettra-drawer.open { display: flex; }\n");
+        sb.append("@media (max-width: 768px) {\n");
+        sb.append("  .jettra-hamburger { display: block; }\n");
+        sb.append("  .jettra-topbar-content { display: none; }\n"); // Hide default topbar content on mobile
+        sb.append("}\n");
+        sb.append("</style>\n");
+        
+        sb.append("<script>\n");
+        sb.append("function toggleJettraMenu() {\n");
+        sb.append("  var drawer = document.getElementById('jettra-drawer-menu');\n");
+        sb.append("  if(drawer.classList.contains('open')) { drawer.classList.remove('open'); }\n");
+        sb.append("  else { drawer.classList.add('open'); }\n");
+        sb.append("}\n");
+        sb.append("</script>\n");
+
+        sb.append("<div ").append(renderCommonAttributes(theme, "espresso-scaffold jettra-scaffold-layout")).append(" ").append(modifier.getStyles()).append(">\n");
         
         if (topBar != null) {
-            sb.append("<header style=\"width: 100%; box-sizing: border-box;\">\n");
+            sb.append("<header class=\"jettra-topbar\">\n");
+            sb.append("<div class=\"jettra-hamburger\" onclick=\"toggleJettraMenu()\">&#9776;</div>\n");
+            sb.append("<div class=\"jettra-topbar-content\" style=\"width: 100%;\">\n");
             sb.append(topBar.render(theme));
+            sb.append("</div>\n");
             sb.append("</header>\n");
+            
+            // The drawer menu for mobile
+            sb.append("<div id=\"jettra-drawer-menu\" class=\"jettra-drawer\">\n");
+            sb.append(topBar.render(theme));
+            sb.append("</div>\n");
         }
         
         if (body != null) {
-            sb.append("<main style=\"flex: 1; overflow: auto; padding: 16px; box-sizing: border-box;\">\n");
+            sb.append("<main class=\"jettra-main-viewport\">\n");
+            sb.append("<div style=\"width: 100%;\">\n");
             sb.append(body.render(theme));
+            sb.append("</div>\n");
             sb.append("</main>\n");
         }
         

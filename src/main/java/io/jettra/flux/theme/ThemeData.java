@@ -64,6 +64,7 @@ public class ThemeData {
                "    grid-template-rows: 70px 1fr auto;\n" +
                "  }\n" +
                "  .espresso-left { display: none; /* Can be handled via a mobile menu toggle later */ }\n" +
+               "  .espresso-left.open { display: block; position: fixed; left: 0; top: 70px; height: calc(100vh - 70px); width: 280px; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }\n" +
                "}\n" +
                "</style>\n";
     }

@@ -8,6 +8,6 @@ package io.jettra.flux.model;
  *
  * @author avbravo
  */
-public record CredentialFlux(String username, String name, String photo, String role, String departament) {
+public record CredentialFlux(String username, String name, String role, String department, String photo) {
 
 }
