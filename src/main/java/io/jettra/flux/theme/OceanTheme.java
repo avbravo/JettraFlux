@@ -35,9 +35,9 @@ public class OceanTheme {
 
     public static class DashboardPage {
         public static final String CustomCSS = "<style>\n"
-            + ".atlantis-dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }\n"
-            + ".atlantis-main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; width: 100%; margin-top: 1.5rem; }\n"
-            + "@media (max-width: 992px) { .atlantis-dashboard-grid, .atlantis-main-grid { grid-template-columns: 1fr; } }\n"
+            + ".oceantheme-dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }\n"
+            + ".oceantheme-main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; width: 100%; margin-top: 1.5rem; }\n"
+            + "@media (max-width: 992px) { .oceantheme-dashboard-grid, .oceantheme-main-grid { grid-template-columns: 1fr; } }\n"
             + ".stat-card { display: flex; flex-direction: column; gap: 10px; }\n"
             + ".stat-header { font-size: 0.85rem; color: #94a3b8; font-weight: 600; }\n"
             + ".stat-value { font-size: 1.8rem; font-weight: 700; color: var(--on-surface-color); }\n"
