@@ -107,7 +107,7 @@ public class Icon extends Widget {
     @Override
     public String render(ThemeData theme) {
         if (iconClass != null && iconClass.trim().startsWith("<svg")) {
-             return iconClass; // Render SVG directly
+             return "<span " + renderCommonAttributes(theme, "jettra-icon-svg") + ">" + iconClass + "</span>";
         }
         StringBuilder sb = new StringBuilder();
         // Defaults to 'i' tag for icons like FontAwesome or Bootstrap

@@ -24,6 +24,22 @@ public class Accordion extends Widget {
             sb.append(tab.render(theme));
         }
         sb.append("</div>\n");
+        sb.append("<script>\n");
+        sb.append("function toggleAccordion(el) {\n");
+        sb.append("  var tab = el.parentElement;\n");
+        sb.append("  var content = tab.querySelector('.espresso-accordion-content');\n");
+        sb.append("  var icon = el.querySelector('.espresso-accordion-header-icon i');\n");
+        sb.append("  if (content.style.display === 'block') {\n");
+        sb.append("    content.style.display = 'none';\n");
+        sb.append("    tab.classList.remove('espresso-accordion-tab-active');\n");
+        sb.append("    if(icon) { icon.classList.remove('fa-chevron-down'); icon.classList.add('fa-chevron-right'); }\n");
+        sb.append("  } else {\n");
+        sb.append("    content.style.display = 'block';\n");
+        sb.append("    tab.classList.add('espresso-accordion-tab-active');\n");
+        sb.append("    if(icon) { icon.classList.remove('fa-chevron-right'); icon.classList.add('fa-chevron-down'); }\n");
+        sb.append("  }\n");
+        sb.append("}\n");
+        sb.append("</script>\n");
         return sb.toString();
     }
 }

@@ -44,12 +44,14 @@ public class ThemeData {
                "  --on-surface-color: " + onSurfaceColor + ";\n" +
                "}\n" +
                "body { background-color: var(--background-color); color: var(--on-surface-color); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }\n" +
+               ".jettra-icon-svg { display: inline-flex; align-items: center; justify-content: center; }\n" +
+               ".jettra-icon-svg svg { width: 100%; height: 100%; }\n" +
                "/* JettraFlux Professional Dashboard Layout */\n" +
                ".espresso-dashboard {\n" +
                "  display: grid;\n" +
                "  grid-template-areas: 'top top' 'left center' 'left footer';\n" +
                "  grid-template-columns: 280px 1fr;\n" +
-               "  grid-template-rows: 70px 1fr auto;\n" +
+               "  grid-template-rows: 70px minmax(0, 1fr) auto;\n" +
                "  height: 100vh;\n" +
                "  overflow: hidden;\n" +
                "}\n" +
@@ -61,7 +63,7 @@ public class ThemeData {
                "  .espresso-dashboard {\n" +
                "    grid-template-areas: 'top' 'center' 'footer';\n" +
                "    grid-template-columns: 1fr;\n" +
-               "    grid-template-rows: 70px 1fr auto;\n" +
+               "    grid-template-rows: 70px minmax(0, 1fr) auto;\n" +
                "  }\n" +
                "  .espresso-left {\n" +
                "    position: fixed;\n" +

@@ -23,8 +23,12 @@ public class WidgetLet extends Widget {
         return new WidgetLet(title);
     }
 
-    public WidgetLet icon(String icon) {
-        this.icon = icon;
+    public WidgetLet icon(String iconClass) {
+        if (iconClass != null && !iconClass.trim().startsWith("<")) {
+            this.icon = "<i class='" + iconClass + "'></i>";
+        } else {
+            this.icon = iconClass;
+        }
         return this;
     }
 
@@ -42,6 +46,11 @@ public class WidgetLet extends Widget {
         this.actionWidget = widget;
         return this;
     }
+
+    public String getTitle() { return title; }
+    public String getUrl() { return url; }
+    public String getIcon() { return icon; }
+    public List<WidgetLet> getChildren() { return children; }
 
     @Override
     public String render(ThemeData theme) {

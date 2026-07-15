@@ -29,7 +29,7 @@ public class AccordionTab extends Widget {
         sb.append("<div ").append(renderCommonAttributes(theme, "espresso-accordion-tab" + activeClass)).append(">\n");
         
         // Header
-        sb.append("  <div class=\"espresso-accordion-header\">\n");
+        sb.append("  <div class=\"espresso-accordion-header\" onclick=\"toggleAccordion(this)\" style=\"cursor: pointer;\">\n");
         sb.append("    <span class=\"espresso-accordion-header-icon\"><i class=\"fas fa-chevron-").append(active ? "down" : "right").append("\"></i></span>\n");
         sb.append("    <span class=\"espresso-accordion-header-text\">").append(header).append("</span>\n");
         sb.append("  </div>\n");
