@@ -62,7 +62,11 @@ public class WidgetLet extends Widget {
         
         sb.append("<div style=\"display: flex; align-items: center;\">");
         if (icon != null && !icon.isEmpty()) {
-            sb.append("<span style=\"margin-right: 8px;\">").append(icon).append("</span>");
+            if (icon.trim().startsWith("<")) {
+                sb.append("<span style=\"margin-right: 8px;\">").append(icon).append("</span>");
+            } else {
+                sb.append("<span style=\"margin-right: 8px;\"><i class=\"").append(icon).append("\"></i></span>");
+            }
         }
         sb.append("<span style=\"font-weight: bold;\">").append(title).append("</span>");
         sb.append("</div>");
