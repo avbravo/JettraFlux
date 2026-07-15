@@ -12,6 +12,10 @@ public class ProgressBar extends Widget {
     public static ProgressBar create() {
         return new ProgressBar();
     }
+
+    public static ProgressBar of() {
+        return new ProgressBar();
+    }
     
     public ProgressBar value(double value) {
         this.value = value;

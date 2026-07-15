@@ -13,7 +13,12 @@ public class Column extends Widget {
     }
 
     public static Column of(Widget... children) {
-        return new Column(Arrays.asList(children));
+        return new Column(new java.util.ArrayList<>(Arrays.asList(children)));
+    }
+
+    public Column add(Widget child) {
+        this.children.add(child);
+        return this;
     }
 
     @Override

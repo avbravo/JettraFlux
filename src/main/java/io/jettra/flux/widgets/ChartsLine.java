@@ -16,6 +16,10 @@ public class ChartsLine extends Widget {
         return new ChartsLine(Arrays.asList(children));
     }
 
+    public static ChartsLine of(String data) {
+        return new ChartsLine(Arrays.asList(Text.of(data)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

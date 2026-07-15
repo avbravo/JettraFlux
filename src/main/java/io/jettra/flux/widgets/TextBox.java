@@ -16,6 +16,10 @@ public class TextBox extends Widget {
         return new TextBox(Arrays.asList(children));
     }
 
+    public static TextBox of(String text) {
+        return new TextBox(Arrays.asList(Text.of(text)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

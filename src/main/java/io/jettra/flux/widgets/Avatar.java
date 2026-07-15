@@ -16,6 +16,18 @@ public class Avatar extends Widget {
         return new Avatar(Arrays.asList(children));
     }
 
+    public static Avatar of(String src) {
+        if (src != null && (src.startsWith("http") || src.startsWith("data:"))) {
+            return new Avatar(Arrays.asList(Image.of(src)));
+        } else {
+            return new Avatar(Arrays.asList(Text.of(src)));
+        }
+    }
+
+    public Avatar shape(String shape) {
+        return this;
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

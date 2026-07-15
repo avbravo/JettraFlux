@@ -16,6 +16,10 @@ public class FileUpload extends Widget {
         return new FileUpload(Arrays.asList(children));
     }
 
+    public static FileUpload of(String label, String url) {
+        return new FileUpload(Arrays.asList(Text.of(label), Text.of(url)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

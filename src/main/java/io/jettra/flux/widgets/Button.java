@@ -16,6 +16,10 @@ public class Button extends Widget {
         return new Button(Arrays.asList(children));
     }
 
+    public static Button of(String label) {
+        return new Button(Arrays.asList(Text.of(label)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

@@ -16,6 +16,10 @@ public class CharsPie extends Widget {
         return new CharsPie(Arrays.asList(children));
     }
 
+    public static CharsPie of(String data) {
+        return new CharsPie(Arrays.asList(Text.of(data)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

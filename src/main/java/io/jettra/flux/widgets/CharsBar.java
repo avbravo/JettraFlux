@@ -16,6 +16,10 @@ public class CharsBar extends Widget {
         return new CharsBar(Arrays.asList(children));
     }
 
+    public static CharsBar of(String data) {
+        return new CharsBar(Arrays.asList(Text.of(data)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();

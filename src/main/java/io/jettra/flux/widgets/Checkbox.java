@@ -16,6 +16,10 @@ public class Checkbox extends Widget {
         return new Checkbox(name, label);
     }
 
+    public static Checkbox of(String label) {
+        return new Checkbox(label, label);
+    }
+
     @Override
     public String render(ThemeData theme) {
         String labelStyle = "display: flex; align-items: center; gap: 8px; color: " + theme.onSurfaceColor + "; font-size: 16px;";

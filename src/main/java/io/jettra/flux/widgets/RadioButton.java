@@ -16,6 +16,10 @@ public class RadioButton extends Widget {
         return new RadioButton();
     }
 
+    public static RadioButton of(String id, String label) {
+        return new RadioButton().name(id).label(label);
+    }
+
     public RadioButton name(String name) {
         this.name = name;
         return this;

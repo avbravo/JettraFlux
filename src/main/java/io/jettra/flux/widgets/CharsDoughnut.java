@@ -16,6 +16,10 @@ public class CharsDoughnut extends Widget {
         return new CharsDoughnut(Arrays.asList(children));
     }
 
+    public static CharsDoughnut of(String data) {
+        return new CharsDoughnut(Arrays.asList(Text.of(data)));
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
