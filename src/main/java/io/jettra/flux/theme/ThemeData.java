@@ -63,8 +63,20 @@ public class ThemeData {
                "    grid-template-columns: 1fr;\n" +
                "    grid-template-rows: 70px 1fr auto;\n" +
                "  }\n" +
-               "  .espresso-left { display: none; /* Can be handled via a mobile menu toggle later */ }\n" +
-               "  .espresso-left.open { display: block; position: fixed; left: 0; top: 70px; height: calc(100vh - 70px); width: 280px; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.5); }\n" +
+               "  .espresso-left {\n" +
+               "    position: fixed;\n" +
+               "    left: -280px;\n" +
+               "    top: 70px;\n" +
+               "    height: calc(100vh - 70px);\n" +
+               "    width: 280px;\n" +
+               "    z-index: 1000;\n" +
+               "    box-shadow: 2px 0 10px rgba(0,0,0,0.5);\n" +
+               "    transition: left 0.3s ease;\n" +
+               "    display: block;\n" +
+               "  }\n" +
+               "  .espresso-left.open {\n" +
+               "    left: 0;\n" +
+               "  }\n" +
                "}\n" +
                "</style>\n";
     }

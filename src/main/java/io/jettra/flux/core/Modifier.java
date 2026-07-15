@@ -59,6 +59,21 @@ public class Modifier {
         return this;
     }
 
+    public Modifier style(String styleString) {
+        if (styleString != null && !styleString.trim().isEmpty()) {
+            String[] parts = styleString.split(";");
+            for (String part : parts) {
+                if (part.contains(":")) {
+                    String[] kv = part.split(":");
+                    if (kv.length == 2) {
+                        styles.put(kv[0].trim(), kv[1].trim());
+                    }
+                }
+            }
+        }
+        return this;
+    }
+
     public String getStyles() {
         return styles.entrySet().stream()
                 .map(e -> e.getKey() + ":" + e.getValue() + ";")
