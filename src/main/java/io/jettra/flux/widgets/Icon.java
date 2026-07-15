@@ -35,6 +35,7 @@ public class Icon extends Widget {
     public static final String EXCLAMATION_TRIANGLE = "fas fa-exclamation-triangle";
     public static final String EXCLAMATION_CIRCLE = "fas fa-exclamation-circle";
     public static final String CHECK_CIRCLE = "fas fa-check-circle";
+    public static final String LIST = "fas fa-list";
 
     public static class Bootstrap {
         public static final String CHECK = "bi bi-check";
