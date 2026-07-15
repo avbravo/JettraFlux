@@ -42,3 +42,38 @@ Tarjeta diseñada específicamente para los cuadros de estadísticas principales
 
 - **Clases CSS:** `stat-card`, `stat-header`, `stat-badge up/down`, `stat-value`
 - **Uso:** `io.jettra.flux.widgets.StatCard.of("Conversion Rate", "0.8%", "0.81%", false)` (El último parámetro indica si la flecha apunta hacia arriba y si es verde).
+
+## E-Commerce & Forms Extensions
+
+### Dropdown
+- **Description:** A stylized select element for single-item selection from a list of strings.
+- **Props:** `options` (varargs `String`), `placeholder` (String).
+- **Events:** Controlled externally via standard form submission or JS.
+- **Usage:**
+  ```java
+  Widget myDropdown = Dropdown.of("Option 1", "Option 2").placeholder("Select one...");
+  ```
+
+### InputNumber
+- **Description:** A numeric input field styled with increment and decrement buttons, hiding native spin buttons.
+- **Props:** `value` (int) initial value.
+- **Usage:**
+  ```java
+  Widget quantity = InputNumber.of(1);
+  ```
+
+### Rating
+- **Description:** A visual star rating component.
+- **Props:** `value` (int) 1 to 5 stars.
+- **Usage:**
+  ```java
+  Widget myRating = Rating.of(4);
+  ```
+
+### Editor
+- **Description:** A text area with a visual (mocked) rich-text toolbar to match the Atlantis design.
+- **Props:** `content` (String) initial content.
+- **Usage:**
+  ```java
+  Widget editor = Editor.of("Initial text...");
+  ```
