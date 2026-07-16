@@ -71,7 +71,7 @@ public class TimeLineItem extends Widget {
         String markerStyle = "display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid " + markerColor + "; background-color: var(--surface-color, #ffffff); box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;";
         sb.append("<div class=\"jettra-timeline-event-marker\" style=\"").append(markerStyle).append("\">\n");
         if (markerIcon != null && !markerIcon.isEmpty()) {
-            sb.append("<span style=\"display: flex; align-items: center; justify-content: center;\">").append(Icon.of(markerIcon).render(theme)).append("</span>\n");
+            sb.append("<span style=\"display: flex; align-items: center; justify-content: center;\"><i class=\"").append(markerIcon).append("\"></i></span>\n");
         }
         sb.append("</div>\n");
         

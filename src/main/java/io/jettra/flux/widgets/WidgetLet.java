@@ -13,6 +13,7 @@ public class WidgetLet extends Widget {
     private Widget actionWidget;
     private String url;
     private boolean popup;
+    private Widget iconWidget;
 
     public WidgetLet(String title) {
         this.title = title;
@@ -26,6 +27,7 @@ public class WidgetLet extends Widget {
         this.icon = iconClass;
         return this;
     }
+    public WidgetLet icon(Widget iconWidget) { this.iconWidget = iconWidget; return this; }
 
     public WidgetLet url(String url) {
         this.url = url;
@@ -86,7 +88,9 @@ public class WidgetLet extends Widget {
         sb.append(">");
         
         sb.append("<div style=\"display: flex; align-items: center;\">");
-        if (icon != null && !icon.isEmpty()) {
+        if (iconWidget != null) {
+            sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(iconWidget.render(theme)).append("</span>");
+        } else if (icon != null && !icon.isEmpty()) {
             if (icon.trim().startsWith("<svg")) {
                 sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(icon).append("</span>");
             } else {

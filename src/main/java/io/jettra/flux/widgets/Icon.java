@@ -137,11 +137,12 @@ public class Icon extends Widget {
     @Override
     public String render(ThemeData theme) {
         if (iconClass != null && iconClass.trim().startsWith("<svg")) {
-             return "<span " + renderCommonAttributes(theme, "jettra-icon-svg") + ">" + iconClass + "</span>";
+             String svgClasses = "jettra-icon-svg " + modifier.getClasses();
+             String styles = modifier.getStyles();
+             return "<span class=\"" + svgClasses.trim() + "\" style=\"" + styles + "\">" + iconClass + "</span>";
         }
-        StringBuilder sb = new StringBuilder();
-        // Defaults to 'i' tag for icons like FontAwesome or Bootstrap
-        sb.append("<i ").append(renderCommonAttributes(theme, iconClass)).append("></i>");
-        return sb.toString();
+        String finalClasses = iconClass + " " + modifier.getClasses();
+        String styles = modifier.getStyles();
+        return "<i class=\"" + finalClasses.trim() + "\" style=\"" + styles + "\"></i>";
     }
 }

@@ -47,7 +47,7 @@ public class Carousel extends Widget {
         
         for (Widget item : items) {
             // Updated to ensure child items maintain their own dimensions
-            sb.append("  <div style=\"scroll-snap-align: start; flex: 0 0 auto; display: flex; justify-content: center; align-items: center;\">\n");
+            sb.append("  <div style=\"scroll-snap-align: start; flex: 0 0 auto; display: flex; justify-content: center; align-items: center; width: max-content;\">\n");
             sb.append(item.render(theme));
             sb.append("  </div>\n");
         }

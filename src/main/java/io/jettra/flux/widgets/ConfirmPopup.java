@@ -27,8 +27,16 @@ public class ConfirmPopup extends Widget {
         sb.append("<i class=\"fas fa-exclamation-triangle\" style=\"color:#eab308;\"></i><span>").append(message).append("</span></div>");
         sb.append("<div style=\"display:flex; justify-content:flex-end; gap:10px;\">");
         sb.append("<button type=\"button\" onclick=\"document.getElementById('").append(id).append("').style.display='none'\" style=\"background:transparent; border:1px solid #ccc; padding:6px 12px; border-radius:4px; cursor:pointer;\">Reject</button>");
-        sb.append("<button type=\"button\" onclick=\"").append(actionMethod != null ? "window.location.href='" + actionMethod + "'" : "alert('Confirmed')").append("\" style=\"background:var(--primary-color, #3b82f6); color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;\">Accept</button>");
+        String acceptAction = actionMethod != null ? "window.location.href='" + actionMethod + "'" : "document.getElementById('" + id + "').style.display='none'; document.getElementById('" + id + "_confirmed').showModal();";
+        sb.append("<button type=\"button\" onclick=\"").append(acceptAction).append("\" style=\"background:var(--primary-color, #3b82f6); color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;\">Accept</button>");
         sb.append("</div></div></div>");
+        
+        String confirmedDialogHtml = "<dialog id='" + id + "_confirmed' style='border:none; border-radius:8px; padding:20px; box-shadow:0 10px 15px rgba(0,0,0,0.1); background:var(--surface-color, #fff); color:var(--text-color, #333);'> " +
+                                     "<h4 style=\"margin-top:0; margin-bottom:15px;\"><i class=\"fas fa-check-circle\" style=\"color:#10b981; margin-right:8px;\"></i>Confirmed</h4>" + 
+                                     "<p style=\"margin-bottom:20px;\">Action completed successfully.</p>" +
+                                     "<div style=\"text-align:right;\"><button type=\"button\" onclick=\"this.closest('dialog').close();\" style=\"background:var(--primary-color, #3b82f6); color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;\">OK</button></div>" + 
+                                     "</dialog>";
+        sb.append(confirmedDialogHtml);
         return sb.toString();
     }
 }

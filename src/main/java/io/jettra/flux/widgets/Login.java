@@ -7,6 +7,7 @@ public class Login extends Widget {
     private String action = "/login";
     private String title = "Login";
     private String logoUrl = null;
+    private String forgotPasswordUrl = "/forgot-password";
 
     private Login() {}
 
@@ -29,6 +30,11 @@ public class Login extends Widget {
         return this;
     }
 
+    public Login forgotPasswordUrl(String forgotPasswordUrl) {
+        this.forgotPasswordUrl = forgotPasswordUrl;
+        return this;
+    }
+
     @Override
     public String render(ThemeData theme) {
         Widget[] children;
@@ -41,7 +47,7 @@ public class Login extends Widget {
                 Label.of("Password").forId("password"),
                 TextField.of("password", "Enter password").modifier(new io.jettra.flux.core.Modifier().attribute("type", "password")),
                 ElevatedButton.of("Sign In").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; width: 100%; background-color: var(--primary-color, #3b82f6); color: white; border: none;")),
-                Link.of("/forgot-password", "Olvido password").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; text-align: center; display: block; font-size: 0.875rem; color: var(--primary-color, #3b82f6);"))
+                Link.of(forgotPasswordUrl, "Olvido password").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; text-align: center; display: block; font-size: 0.875rem; color: var(--primary-color, #3b82f6);"))
             };
         } else {
             children = new Widget[]{
@@ -51,7 +57,7 @@ public class Login extends Widget {
                 Label.of("Password").forId("password"),
                 TextField.of("password", "Enter password").modifier(new io.jettra.flux.core.Modifier().attribute("type", "password")),
                 ElevatedButton.of("Sign In").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; width: 100%; background-color: var(--primary-color, #3b82f6); color: white; border: none;")),
-                Link.of("/forgot-password", "Olvido password").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; text-align: center; display: block; font-size: 0.875rem; color: var(--primary-color, #3b82f6);"))
+                Link.of(forgotPasswordUrl, "Olvido password").modifier(new io.jettra.flux.core.Modifier().style("margin-top: 15px; text-align: center; display: block; font-size: 0.875rem; color: var(--primary-color, #3b82f6);"))
             };
         }
         
