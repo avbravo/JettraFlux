@@ -24,11 +24,7 @@ public class WidgetLet extends Widget {
     }
 
     public WidgetLet icon(String iconClass) {
-        if (iconClass != null && !iconClass.trim().startsWith("<")) {
-            this.icon = "<i class='" + iconClass + "'></i>";
-        } else {
-            this.icon = iconClass;
-        }
+        this.icon = iconClass;
         return this;
     }
 
@@ -62,20 +58,19 @@ public class WidgetLet extends Widget {
         if (url != null && !url.isEmpty()) {
             sb.append("onclick=\"window.location.href='").append(url).append("'\" ");
         } else if (!children.isEmpty()) {
+            String storageKey = "menu_exp_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
             sb.append("onclick=\"var el = document.getElementById('").append(id).append("_children'); ")
               .append("var icon = document.getElementById('").append(id).append("_icon'); ")
-              .append("if(el.style.display === 'none'){ el.style.display = 'block'; icon.className = 'fas fa-chevron-down'; }")
-              .append("else { el.style.display = 'none'; icon.className = 'fas fa-chevron-right'; }\" ");
+              .append("var isHidden = el.style.display === 'none'; ")
+              .append("el.style.display = isHidden ? 'block' : 'none'; ")
+              .append("icon.className = isHidden ? 'fas fa-chevron-down' : 'fas fa-chevron-right'; ")
+              .append("localStorage.setItem('").append(storageKey).append("', isHidden ? 'open' : 'closed');\" ");
         }
         sb.append(">");
         
         sb.append("<div style=\"display: flex; align-items: center;\">");
         if (icon != null && !icon.isEmpty()) {
-            if (icon.trim().startsWith("<")) {
-                sb.append("<span style=\"margin-right: 8px;\">").append(icon).append("</span>");
-            } else {
-                sb.append("<span style=\"margin-right: 8px;\"><i class=\"").append(icon).append("\"></i></span>");
-            }
+            sb.append("<span style=\"margin-right: 8px;\">").append(Icon.of(icon).render(theme)).append("</span>");
         }
         sb.append("<span style=\"font-weight: bold;\">").append(title).append("</span>");
         sb.append("</div>");
@@ -89,11 +84,15 @@ public class WidgetLet extends Widget {
         sb.append("</div>");
 
         if (!children.isEmpty()) {
+            String storageKey = "menu_exp_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
             sb.append("<div id=\"").append(id).append("_children\" class=\"widgetlet-children\" style=\"display: none; margin-left: 15px; border-left: 1px solid rgba(0,0,0,0.1); padding-left: 10px; margin-top: 5px;\">");
             for (WidgetLet child : children) {
                 sb.append(child.render(theme));
             }
             sb.append("</div>");
+            sb.append("<script>if(localStorage.getItem('").append(storageKey).append("') === 'open') { ")
+              .append("document.getElementById('").append(id).append("_children').style.display = 'block'; ")
+              .append("document.getElementById('").append(id).append("_icon').className = 'fas fa-chevron-down'; } </script>");
         }
         
         sb.append("</div>");

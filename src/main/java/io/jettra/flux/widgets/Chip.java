@@ -24,9 +24,9 @@ public class Chip extends Widget {
         sb.append("<div ").append(renderCommonAttributes(theme, "espresso-chip")).append(" style=\"").append(style).append("\">\n");
 
         if (image != null && !image.isEmpty()) {
-            sb.append("<img src=\"").append(image).append("\" alt=\"chip-image\" style=\"width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover;\" />\n");
+            sb.append("<img src=\"").append(image).append("\" alt=\"chip-image\" style=\"width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; margin-right: 0.5rem;\" />\n");
         } else if (icon != null && !icon.isEmpty()) {
-            sb.append("<i class=\"").append(icon).append("\" style=\"font-size: 1rem;\"></i>\n");
+            sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\">").append(Icon.of(icon).render(theme)).append("</span>\n");
         }
 
         sb.append("<span>").append(label).append("</span>\n");
