@@ -12,12 +12,10 @@ public class WidgetLet extends Widget {
     private final List<WidgetLet> children = new ArrayList<>();
     private Widget actionWidget;
     private String url;
-    private String id;
     private boolean popup;
 
     public WidgetLet(String title) {
         this.title = title;
-        this.id = "wl_" + UUID.randomUUID().toString().replace("-", "");
     }
 
     public static WidgetLet of(String title) {
@@ -60,6 +58,7 @@ public class WidgetLet extends Widget {
 
     @Override
     public String render(ThemeData theme) {
+        String id = "wl_" + UUID.randomUUID().toString().replace("-", "");
         StringBuilder sb = new StringBuilder();
         
         String containerStyle = popup ? "padding: 8px; margin-left: 10px; position: relative;" : "padding: 8px; margin-left: 10px;";
@@ -88,7 +87,7 @@ public class WidgetLet extends Widget {
         
         sb.append("<div style=\"display: flex; align-items: center;\">");
         if (icon != null && !icon.isEmpty()) {
-            if (icon.startsWith("<svg")) {
+            if (icon.trim().startsWith("<svg")) {
                 sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(icon).append("</span>");
             } else {
                 sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>");
@@ -108,21 +107,21 @@ public class WidgetLet extends Widget {
 
         if (!children.isEmpty()) {
             if (popup) {
-                sb.append("<div id=\"").append(id).append("_children\" class=\"widgetlet-children widgetlet-popup\" style=\"display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background: var(--surface-color, #fff); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-radius: 8px; border: 1px solid rgba(128,128,128,0.2); padding: 10px; z-index: 1000;\">");
+                sb.append("<div id=\"").append(id).append("_children\" class=\"widgetlet-children widgetlet-popup\" style=\"display: none; position: absolute; top: 100%; left: 0; min-width: 200px; background: var(--surface-color); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-radius: 8px; border: 1px solid rgba(128,128,128,0.2); padding: 10px; z-index: 1000;\">");
                 for (WidgetLet child : children) {
                     sb.append(child.render(theme));
                 }
                 sb.append("</div>");
             } else {
                 String storageKey = "menu_exp_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
-                sb.append("<div id=\"").append(id).append("_children\" class=\"widgetlet-children\" style=\"display: none; margin-left: 15px; border-left: 1px solid rgba(0,0,0,0.1); padding-left: 10px; margin-top: 5px;\">");
+                sb.append("<div id=\"").append(id).append("_children\" class=\"widgetlet-children\" data-exp-key=\"").append(storageKey).append("\" style=\"display: none; margin-left: 15px; border-left: 1px solid rgba(0,0,0,0.1); padding-left: 10px; margin-top: 5px;\">");
                 for (WidgetLet child : children) {
                     sb.append(child.render(theme));
                 }
                 sb.append("</div>");
                 sb.append("<script>if(localStorage.getItem('").append(storageKey).append("') === 'open') { ")
-                  .append("document.getElementById('").append(id).append("_children').style.display = 'block'; ")
-                  .append("document.getElementById('").append(id).append("_icon').className = 'fas fa-chevron-down'; } </script>");
+                  .append("var c = document.getElementById('").append(id).append("_children'); if(c) c.style.display = 'block'; ")
+                  .append("var i = document.getElementById('").append(id).append("_icon'); if(i) i.className = 'fas fa-chevron-down'; } </script>");
             }
         }
         

@@ -21,6 +21,11 @@ public abstract class Widget {
         return this;
     }
 
+    public Widget attribute(String key, String value) {
+        this.modifier.attribute(key, value);
+        return this;
+    }
+
     public Widget onClick(java.util.function.Consumer<Object> onClick) {
         this.onClick = onClick;
         return this;
@@ -54,6 +59,10 @@ public abstract class Widget {
 
         if (onClick != null) {
             sb.append("onclick=\"espressoFire('").append(id).append("')\" ");
+        }
+        
+        for (java.util.Map.Entry<String, String> entry : modifier.getAttributes().entrySet()) {
+            sb.append(entry.getKey()).append("=\"").append(entry.getValue()).append("\" ");
         }
 
         return sb.toString();

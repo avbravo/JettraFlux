@@ -92,7 +92,11 @@ public class JettraButton extends Widget {
         }
         
         if (icon != null && !icon.isEmpty()) {
-            sb.append("<i class=\"").append(icon).append("\"></i> ");
+            if (icon.trim().startsWith("<svg")) {
+                sb.append("<span style=\"display: inline-flex; align-items: center; margin-right: 0.5rem;\">").append(icon).append("</span>");
+            } else {
+                sb.append("<i class=\"").append(icon).append("\"></i> ");
+            }
         }
         
         if (label != null && !label.isEmpty()) {

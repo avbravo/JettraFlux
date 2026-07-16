@@ -10,9 +10,19 @@ import java.util.stream.Collectors;
  */
 public class Modifier {
     private final Map<String, String> styles = new LinkedHashMap<>();
+    private final Map<String, String> attributes = new LinkedHashMap<>();
     private final StringBuilder classes = new StringBuilder();
 
     public Modifier() {}
+
+    public Modifier attribute(String key, String value) {
+        attributes.put(key, value);
+        return this;
+    }
+    
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
 
     public Modifier padding(int all) {
         styles.put("padding", all + "px");

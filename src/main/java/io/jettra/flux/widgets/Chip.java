@@ -26,7 +26,7 @@ public class Chip extends Widget {
         if (image != null && !image.isEmpty()) {
             sb.append("<img src=\"").append(image).append("\" alt=\"chip-image\" style=\"width: 2rem; height: 2rem; border-radius: 50%; object-fit: cover; margin-right: 0.5rem;\" />\n");
         } else if (icon != null && !icon.isEmpty()) {
-            if (icon.startsWith("<svg")) {
+            if (icon.trim().startsWith("<svg")) {
                 sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\">").append(icon).append("</span>\n");
             } else {
                 sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>\n");
