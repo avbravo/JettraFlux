@@ -27,11 +27,7 @@ public class Image extends Widget {
         if (!alt.isEmpty()) {
             sb.append("alt=\"").append(alt).append("\" ");
         }
-        sb.append(renderCommonAttributes(theme, "espresso-image"));
-        if (!modifier.getStyles().isEmpty()) {
-            sb.append(" style=\"").append(modifier.getStyles()).append("\"");
-        }
-        sb.append("/>");
+        sb.append(renderCommonAttributes(theme, "espresso-image")).append("/>");
         return sb.toString();
     }
 }
