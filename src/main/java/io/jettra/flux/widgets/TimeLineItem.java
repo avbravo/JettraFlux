@@ -41,31 +41,46 @@ public class TimeLineItem extends Widget {
         return this;
     }
 
+    public TimeLineItem layout(String layout) {
+        this.layout = layout;
+        return this;
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("<div class=\"jettra-timeline-event\" style=\"display: flex; min-height: 70px; position: relative;\">\n");
+        boolean isHorizontal = "horizontal".equalsIgnoreCase(layout);
+        
+        String eventStyle = isHorizontal ? "display: flex; flex-direction: column; min-width: 120px; flex: 1; position: relative;" : "display: flex; min-height: 70px; position: relative;";
+        sb.append("<div class=\"jettra-timeline-event\" style=\"").append(eventStyle).append("\">\n");
         
         // Opposite
-        sb.append("<div class=\"jettra-timeline-event-opposite\" style=\"flex: 1; padding: 0 1rem; text-align: right; display: flex; align-items: center; justify-content: flex-end;\">\n");
+        String oppositeStyle = isHorizontal ? "flex: 1; padding: 0 0 1rem 0; text-align: center; display: flex; align-items: flex-end; justify-content: center;" : "flex: 1; padding: 0 1rem; text-align: right; display: flex; align-items: center; justify-content: flex-end;";
+        sb.append("<div class=\"jettra-timeline-event-opposite\" style=\"").append(oppositeStyle).append("\">\n");
         if (opposite != null) {
             sb.append(opposite.render(theme));
         }
         sb.append("</div>\n");
 
         // Separator
-        sb.append("<div class=\"jettra-timeline-event-separator\" style=\"display: flex; flex-direction: column; align-items: center; z-index: 1;\">\n");
-        sb.append("<div class=\"jettra-timeline-event-marker\" style=\"display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid ").append(markerColor).append("; background-color: var(--surface-color, #ffffff); box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n");
+        String separatorStyle = isHorizontal ? "display: flex; flex-direction: row; align-items: center; z-index: 1;" : "display: flex; flex-direction: column; align-items: center; z-index: 1;";
+        sb.append("<div class=\"jettra-timeline-event-separator\" style=\"").append(separatorStyle).append("\">\n");
+        
+        String markerStyle = "display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 2px solid " + markerColor + "; background-color: var(--surface-color, #ffffff); box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;";
+        sb.append("<div class=\"jettra-timeline-event-marker\" style=\"").append(markerStyle).append("\">\n");
         if (markerIcon != null && !markerIcon.isEmpty()) {
             sb.append("<span style=\"display: flex; align-items: center; justify-content: center;\">").append(Icon.of(markerIcon).render(theme)).append("</span>\n");
         }
         sb.append("</div>\n");
-        sb.append("<div class=\"jettra-timeline-event-connector\" style=\"flex-grow: 1; width: 2px; background-color: ").append(connectorColor).append("; margin: 4px 0;\"></div>\n");
+        
+        String connectorStyle = isHorizontal ? "flex-grow: 1; height: 2px; background-color: " + connectorColor + "; margin: 0 4px;" : "flex-grow: 1; width: 2px; background-color: " + connectorColor + "; margin: 4px 0;";
+        sb.append("<div class=\"jettra-timeline-event-connector\" style=\"").append(connectorStyle).append("\"></div>\n");
         sb.append("</div>\n");
 
         // Content
-        sb.append("<div class=\"jettra-timeline-event-content\" style=\"flex: 1; padding: 0 1rem; display: flex; align-items: center;\">\n");
+        String contentStyle = isHorizontal ? "flex: 1; padding: 1rem 0 0 0; display: flex; flex-direction: column; align-items: center; text-align: center;" : "flex: 1; padding: 0 1rem; display: flex; align-items: center;";
+        sb.append("<div class=\"jettra-timeline-event-content\" style=\"").append(contentStyle).append("\">\n");
         if (content != null) {
             sb.append(content.render(theme));
         }
