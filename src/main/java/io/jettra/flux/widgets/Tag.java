@@ -27,7 +27,11 @@ public class Tag extends Widget {
         StringBuilder sb = new StringBuilder();
         sb.append("<span ").append(renderCommonAttributes(theme, "espresso-tag")).append(" style=\"").append(style).append("\">");
         if (icon != null && !icon.isEmpty()) {
-            sb.append("<span style=\"margin-right: 0.3rem; display: flex; align-items: center;\">").append(Icon.of(icon).render(theme)).append("</span>");
+            if (icon.startsWith("<svg")) {
+                sb.append("<span style=\"margin-right: 0.3rem; display: flex; align-items: center;\">").append(icon).append("</span>");
+            } else {
+                sb.append("<span style=\"margin-right: 0.3rem; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>");
+            }
         }
         sb.append("<span>").append(text).append("</span>");
         sb.append("</span>");

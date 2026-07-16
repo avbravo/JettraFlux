@@ -36,6 +36,36 @@ public class Icon extends Widget {
     public static final String EXCLAMATION_CIRCLE = "fas fa-exclamation-circle";
     public static final String CHECK_CIRCLE = "fas fa-check-circle";
     public static final String LIST = "fas fa-list";
+    public static final String FOLDER = "fas fa-folder";
+    public static final String HEART = "fas fa-heart";
+
+    public static final String IMAGE = "fas fa-image";
+    public static final String USER_MINUS = "fas fa-user-minus";
+    public static final String CHART_LINE = "fas fa-chart-line";
+    public static final String ALIGN_RIGHT = "fas fa-align-right";
+    public static final String ALIGN_LEFT = "fas fa-align-left";
+    public static final String SITEMAP = "fas fa-sitemap";
+    public static final String ALIGN_JUSTIFY = "fas fa-align-justify";
+    public static final String TRASH_ALT = "fas fa-trash-alt";
+    public static final String USER_PLUS = "fas fa-user-plus";
+    public static final String CALENDAR_ALT = "fas fa-calendar-alt";
+    public static final String ALIGN_CENTER = "fas fa-align-center";
+    public static final String BORDER_ALL = "fas fa-border-all";
+    public static final String WRENCH = "fas fa-wrench";
+    public static final String TRUCK = "fas fa-truck";
+    public static final String CLONE = "fas fa-clone";
+    public static final String HISTORY = "fas fa-history";
+    public static final String SHOPPING_CART = "fas fa-shopping-cart";
+    public static final String CHART_PIE = "fas fa-chart-pie";
+    public static final String CLOUD_UPLOAD_ALT = "fas fa-cloud-upload-alt";
+    public static final String FILE = "fas fa-file";
+    public static final String CALENDAR_TIMES = "fas fa-calendar-times";
+    public static final String FILE_EXPORT = "fas fa-file-export";
+    public static final String VIDEO = "fas fa-video";
+    public static final String ADDRESS_BOOK = "fas fa-address-book";
+    public static final String BOOKMARK = "fas fa-bookmark";
+    public static final String BOX = "fas fa-box";
+    public static final String RECEIPT = "fas fa-receipt";
 
     public static class Bootstrap {
         public static final String CHECK = "bi bi-check";

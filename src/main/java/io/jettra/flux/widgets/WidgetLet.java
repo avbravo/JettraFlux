@@ -13,6 +13,7 @@ public class WidgetLet extends Widget {
     private Widget actionWidget;
     private String url;
     private String id;
+    private boolean popup;
 
     public WidgetLet(String title) {
         this.title = title;
@@ -34,6 +35,7 @@ public class WidgetLet extends Widget {
     }
 
     public WidgetLet add(WidgetLet child) {
+        child.popup(this.popup);
         this.children.add(child);
         return this;
     }
@@ -45,6 +47,9 @@ public class WidgetLet extends Widget {
     
     public WidgetLet popup(boolean popup) {
         this.popup = popup;
+        for (WidgetLet child : children) {
+            child.popup(popup);
+        }
         return this;
     }
 
@@ -83,7 +88,11 @@ public class WidgetLet extends Widget {
         
         sb.append("<div style=\"display: flex; align-items: center;\">");
         if (icon != null && !icon.isEmpty()) {
-            sb.append("<span style=\"margin-right: 8px;\">").append(Icon.of(icon).render(theme)).append("</span>");
+            if (icon.startsWith("<svg")) {
+                sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(icon).append("</span>");
+            } else {
+                sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>");
+            }
         }
         sb.append("<span style=\"font-weight: bold; white-space: nowrap;\">").append(title).append("</span>");
         sb.append("</div>");

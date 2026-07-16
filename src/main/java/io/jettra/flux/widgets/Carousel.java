@@ -25,7 +25,7 @@ public class Carousel extends Widget {
         sb.append("<button onclick=\"document.getElementById('").append(id).append("').scrollBy({left: -250, behavior: 'smooth'})\" style=\"position: absolute; left: 10px; z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center;\"><i class=\"fas fa-chevron-left\"></i></button>\n");
         
         sb.append("<div id=\"").append(id).append("\" ").append(renderCommonAttributes(theme, "espresso-carousel"))
-          .append(" style=\"display: flex; overflow-x: hidden; scroll-snap-type: x mandatory; gap: 16px; width: 100%; padding: 10px 40px; ").append(modifier.getStyles()).append("\">\n");
+          .append(" style=\"display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 16px; width: 100%; padding: 10px 40px; ").append(modifier.getStyles()).append("\">\n");
         
         for (Widget item : items) {
             sb.append("  <div style=\"scroll-snap-align: start; flex: 0 0 auto;\">\n");

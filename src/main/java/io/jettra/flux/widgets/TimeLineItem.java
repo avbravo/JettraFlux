@@ -9,6 +9,7 @@ public class TimeLineItem extends Widget {
     private String markerIcon;
     private String markerColor = "#3b82f6";
     private String connectorColor = "#e2e8f0";
+    private String layout = "vertical";
 
     private TimeLineItem() {}
 

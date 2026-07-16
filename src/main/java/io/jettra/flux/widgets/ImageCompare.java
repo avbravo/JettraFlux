@@ -15,11 +15,11 @@ public class ImageCompare extends Widget {
         sb.append("<img id=\"").append(id).append("_img2\" src=\"").append(img2).append("\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);\" />\n");
         
         sb.append("<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" ")
-          .append("oninput=\"document.getElementById('").append(id).append("_img2').style.clipPath = 'polygon(0 0, ' + this.value + '% 0, ' + this.value + '% 100%, 0 100%)'\" ")
+          .append("oninput=\"document.getElementById('").append(id).append("_img2').style.clipPath = 'polygon(0 0, ' + this.value + '% 0, ' + this.value + '% 100%, 0 100%)'; ")
+          .append("document.getElementById('").append(id).append("_divider').style.left = this.value + '%';\" ")
           .append("style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 10;\" />\n");
           
         sb.append("<div style=\"position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: white; pointer-events: none; z-index: 5; transform: translateX(-50%); box-shadow: 0 0 5px rgba(0,0,0,0.5);\" id=\"").append(id).append("_divider\"></div>\n");
-        sb.append("<script>document.querySelector('#").append(id).append("_img2').nextElementSibling.addEventListener('input', function(e) { document.getElementById('").append(id).append("_divider').style.left = e.target.value + '%'; });</script>\n");
         
         sb.append("</div>\n");
         return sb.toString();
