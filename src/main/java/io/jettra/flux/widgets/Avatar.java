@@ -43,7 +43,7 @@ public class Avatar extends Widget {
         if (image != null && !image.isEmpty()) {
             sb.append("<img src=\"").append(image).append("\" style=\"width:100%; height:100%; object-fit:cover; border-radius:inherit;\" />");
         } else if (icon != null && !icon.isEmpty()) {
-            sb.append("<i class=\"").append(icon).append("\"></i>");
+            sb.append(io.jettra.flux.widgets.Icon.of(icon).render(theme));
         } else if (label != null && !label.isEmpty()) {
             sb.append("<span style=\"font-weight:600;\">").append(label).append("</span>");
         }

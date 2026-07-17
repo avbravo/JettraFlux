@@ -39,11 +39,7 @@ public class Chip extends Widget {
         } else if (iconWidget != null) {
             sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\">").append(iconWidget.render(theme)).append("</span>\n");
         } else if (icon != null && !icon.isEmpty()) {
-            if (icon.trim().startsWith("<svg")) {
-                sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\">").append(icon).append("</span>\n");
-            } else {
-                sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>\n");
-            }
+            sb.append("<span style=\"margin-right: 0.5rem; display: flex; align-items: center;\">").append(io.jettra.flux.widgets.Icon.of(icon).render(theme)).append("</span>\n");
         }
 
         sb.append("<span>").append(label).append("</span>\n");

@@ -91,11 +91,7 @@ public class WidgetLet extends Widget {
         if (iconWidget != null) {
             sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(iconWidget.render(theme)).append("</span>");
         } else if (icon != null && !icon.isEmpty()) {
-            if (icon.trim().startsWith("<svg")) {
-                sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(icon).append("</span>");
-            } else {
-                sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\"><i class=\"").append(icon).append("\"></i></span>");
-            }
+            sb.append("<span style=\"margin-right: 8px; display: flex; align-items: center;\">").append(io.jettra.flux.widgets.Icon.of(icon).render(theme)).append("</span>");
         }
         sb.append("<span style=\"font-weight: bold; white-space: nowrap;\">").append(title).append("</span>");
         sb.append("</div>");
