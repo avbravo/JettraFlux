@@ -545,14 +545,12 @@ public class RenderedCrudProcessor extends AbstractProcessor {
                 .superclass(extendsTypeName)
                 .addSuperinterface(TypeName.get(interfaceElement.asType()));
 
-        // Copy annotations from interface to class (like @JettraPageSincronized)
         for (AnnotationMirror mirror : interfaceElement.getAnnotationMirrors()) {
-            if (!mirror.getAnnotationType().toString().equals("io.jettra.wui.core.annotations.CrudView")) {
+            if (!mirror.getAnnotationType().toString().equals("io.jettra.flux.annotations.crud.RenderedCrud")) {
                 classBuilder.addAnnotation(AnnotationSpec.get(mirror));
             }
         }
         
-        // @CrudView still applied to the class to satisfy any remaining runtime checks like JettraMVC routing if any, but autoRender=false
         AnnotationSpec.Builder crudViewBuilder = AnnotationSpec.builder(RenderedCrud.class)
                 .addMember("model", "$T.class", TypeName.get(getModelType(annotation)))
                 .addMember("autoRender", "false")
@@ -572,69 +570,120 @@ public class RenderedCrudProcessor extends AbstractProcessor {
         }
         classBuilder.addAnnotation(crudViewBuilder.build());
 
-        // Field for properties
         classBuilder.addField(FieldSpec.builder(Properties.class, "msg", Modifier.PRIVATE)
                 .addAnnotation(AnnotationSpec.builder(ClassName.get("io.jettra.core.inject.annotation", "InjectProperties"))
                         .addMember("name", "$S", "messages")
                         .build())
                 .build());
 
-        // Constructor
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addStatement("super($S)", annotation.title());
+                .addModifiers(Modifier.PUBLIC);
+        // Do not call super(title) since TemplatePage has a no-arg constructor and overrides getTitle() instead.
         classBuilder.addMethod(constructor.build());
-
-        // initCenter
-        String handlerClassName = interfaceName + "CrudHandler";
-        ClassName handlerType = ClassName.get(packageName, handlerClassName);
-
-        MethodSpec.Builder initCenter = MethodSpec.methodBuilder("initCenter")
+        
+        // Add getTitle()
+        classBuilder.addMethod(MethodSpec.methodBuilder("getTitle")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PROTECTED)
-                .addParameter(ClassName.get("io.jettra.wui.complex", "Center"), "center")
-                .addParameter(String.class, "username");
+                .returns(String.class)
+                .addStatement("return $S", annotation.title())
+                .build());
 
-        initCenter.addStatement("$T handler = new $T()", handlerType, handlerType);
-        
-        boolean useController = controllerType != null && !controllerType.toString().equals("void");
-        TypeName dataAccessTypeName = TypeName.get(useController ? controllerType : repoType);
+        String handlerClassName = interfaceName + "RenderedCrudHandler";
+        ClassName handlerType = ClassName.get(packageName, handlerClassName);
 
-        initCenter.addStatement("io.jettra.wui.complex.CrudView crudComponent = new io.jettra.wui.complex.CrudView($T.class, $T.class, msg, handler)", 
-                TypeName.get(getModelType(annotation)), dataAccessTypeName);
+        MethodSpec.Builder buildCenter = MethodSpec.methodBuilder("buildCenter")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PROTECTED)
+                .returns(ClassName.get("io.jettra.flux.core", "Widget"))
+                .addParameter(ClassName.get("com.sun.net.httpserver", "HttpExchange"), "exchange")
+                .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "params")
+                .addParameter(String.class, "currentTheme");
+
+        buildCenter.addStatement("$T handler = new $T()", handlerType, handlerType);
         
-        initCenter.addStatement("crudComponent.setEditable($L)", annotation.editable());
-        initCenter.addStatement("crudComponent.setReportEnabled($L)", annotation.report());
-        initCenter.addStatement("crudComponent.setReportShowViewer($L)", annotation.reportShowViewer());
-        initCenter.addStatement("crudComponent.setReportAllowPrint($L)", annotation.reportAllowPrint());
-        initCenter.addStatement("crudComponent.setReportAllowPdf($L)", annotation.reportAllowPdf());
-        initCenter.addStatement("crudComponent.setReportAllowExcel($L)", annotation.reportAllowExcel());
-        initCenter.addStatement("crudComponent.setReportAllowCsv($L)", annotation.reportAllowCsv());
-        initCenter.addStatement("crudComponent.setReportAllowWord($L)", annotation.reportAllowWord());
-        initCenter.addStatement("crudComponent.setReportOrientation($S)", annotation.reportOrientation());
-        initCenter.addStatement("crudComponent.setReportCustomTitle($S)", annotation.reportTitle());
-        initCenter.addStatement("crudComponent.setReportHeaderColor($S)", annotation.reportHeaderColor());
-        initCenter.addStatement("crudComponent.setParentPage(this)");
+        // Build the JettraFlux UI
+        buildCenter.addStatement("$T items = handler.findAll()", ParameterizedTypeName.get(ClassName.get(List.class), TypeName.get(getModelType(annotation))));
         
-        if (annotation.autoRender()) {
-            initCenter.addStatement("crudComponent.build()");
-            initCenter.addStatement("center.add(crudComponent)");
+        // Toolbar
+        buildCenter.addStatement("java.util.List<io.jettra.flux.core.Widget> toolbarWidgets = new java.util.ArrayList<>()");
+        if (annotation.editable()) {
+            buildCenter.addStatement("toolbarWidgets.add(io.jettra.flux.widgets.Button.of($S).modifier(new io.jettra.flux.core.Modifier().style($S)).attribute($S, $S))", 
+                    "Nuevo Registro", "margin-right: 10px;", "onclick", "document.getElementById('modal_create').style.display='flex'");
         }
+        if (annotation.report()) {
+            buildCenter.addStatement("toolbarWidgets.add(io.jettra.flux.widgets.Button.of($S).modifier(new io.jettra.flux.core.Modifier().style($S)).attribute($S, $S))", 
+                    "Imprimir / Ver", "margin-right: 10px;", "onclick", "document.getElementById('reportModal_crud').style.display='flex'");
+        }
+        buildCenter.addStatement("io.jettra.flux.core.Widget toolbar = io.jettra.flux.widgets.Div.of(toolbarWidgets.toArray(new io.jettra.flux.core.Widget[0])).modifier(new io.jettra.flux.core.Modifier().style($S))", "padding: 10px; display: flex;");
 
-        // Call afterInitCenter only if defined
-        boolean hasAfterInit = false;
+        // Datatable
+        buildCenter.addStatement("java.util.List<io.jettra.flux.core.Widget> headers = new java.util.ArrayList<>()");
+        buildCenter.addStatement("headers.add(io.jettra.flux.widgets.TD.of($S))", "Sel");
+        
+        TypeElement modelElement = (TypeElement) processingEnv.getTypeUtils().asElement(getModelType(annotation));
+        for (VariableElement field : javax.lang.model.util.ElementFilter.fieldsIn(modelElement.getEnclosedElements())) {
+            String name = field.getSimpleName().toString();
+            buildCenter.addStatement("headers.add(io.jettra.flux.widgets.TD.of($S))", name.toUpperCase());
+        }
+        buildCenter.addStatement("headers.add(io.jettra.flux.widgets.TD.of($S))", "Acciones");
+
+        buildCenter.addStatement("java.util.List<java.util.List<io.jettra.flux.core.Widget>> rows = new java.util.ArrayList<>()");
+        buildCenter.beginControlFlow("for (Object item : items)");
+        buildCenter.addStatement("java.util.List<io.jettra.flux.core.Widget> row = new java.util.ArrayList<>()");
+        buildCenter.addStatement("String idVal = handler.getIdValue(($T) item)", TypeName.get(getModelType(annotation)));
+        buildCenter.addStatement("row.add(io.jettra.flux.widgets.TD.of(io.jettra.flux.widgets.Checkbox.of().attribute($S, idVal)))", "value");
+        for (VariableElement field : javax.lang.model.util.ElementFilter.fieldsIn(modelElement.getEnclosedElements())) {
+            String name = field.getSimpleName().toString();
+            buildCenter.addStatement("Object val_$L = handler.getFieldValue(($T) item, $S)", name, TypeName.get(getModelType(annotation)), name);
+            buildCenter.addStatement("row.add(io.jettra.flux.widgets.TD.of(val_$L != null ? val_$L.toString() : \"\"))", name, name);
+        }
+        
+        buildCenter.addStatement("java.util.List<io.jettra.flux.core.Widget> actions = new java.util.ArrayList<>()");
+        if (annotation.editable()) {
+            buildCenter.addStatement("actions.add(io.jettra.flux.widgets.Button.of($S).modifier(new io.jettra.flux.core.Modifier().style($S)).attribute($S, $S + idVal + $S))", 
+                    "Editar", "margin-right: 5px; background-color: #f39c12;", "onclick", "editRecord('", "')");
+            buildCenter.addStatement("actions.add(io.jettra.flux.widgets.Button.of($S).modifier(new io.jettra.flux.core.Modifier().style($S)).attribute($S, $S + idVal + $S))", 
+                    "Eliminar", "background-color: #e74c3c;", "onclick", "deleteRecord('", "')");
+        }
+        buildCenter.addStatement("row.add(io.jettra.flux.widgets.TD.of(io.jettra.flux.widgets.Div.of(actions.toArray(new io.jettra.flux.core.Widget[0]))))");
+        buildCenter.addStatement("rows.add(row)");
+        buildCenter.endControlFlow();
+
+        buildCenter.addStatement("io.jettra.flux.core.Widget table = io.jettra.flux.widgets.Datatable.ofWidgets(headers, rows).modifier(new io.jettra.flux.core.Modifier().style($S))", "width: 100%;");
+
+        // Modals
+        buildCenter.addStatement("io.jettra.flux.core.Widget createModal = io.jettra.flux.widgets.Modal.of(io.jettra.flux.widgets.Paragraph.of($S)).attribute($S, $S)", "Formulario de Creación/Edición aquí", "id", "modal_create");
+        buildCenter.addStatement("io.jettra.flux.core.Widget deleteModal = io.jettra.flux.widgets.ConfirmDialog.of().attribute($S, $S)", "id", "modal_delete");
+        
+        buildCenter.addStatement("java.util.List<io.jettra.flux.core.Widget> centerWidgets = new java.util.ArrayList<>()");
+        buildCenter.addStatement("centerWidgets.add(toolbar)");
+        buildCenter.addStatement("centerWidgets.add(table)");
+        buildCenter.addStatement("centerWidgets.add(createModal)");
+        buildCenter.addStatement("centerWidgets.add(deleteModal)");
+        
+        if (annotation.report()) {
+            buildCenter.addStatement("io.jettra.report.Report dummyReport = new io.jettra.report.Report($S)", annotation.reportTitle());
+            buildCenter.addStatement("dummyReport.setData(items)");
+            buildCenter.addStatement("io.jettra.flux.core.Widget reportViewer = io.jettra.report.ReportViewer.of(dummyReport, $S)", "crud");
+            buildCenter.addStatement("centerWidgets.add(reportViewer)");
+        }
+        
+        // Call afterBuildCenter if defined
+        boolean hasAfterBuild = false;
         for (javax.lang.model.element.Element enclosed : interfaceElement.getEnclosedElements()) {
-            if (enclosed.getKind() == javax.lang.model.element.ElementKind.METHOD && enclosed.getSimpleName().toString().equals("afterInitCenter")) {
-                hasAfterInit = true;
+            if (enclosed.getKind() == javax.lang.model.element.ElementKind.METHOD && enclosed.getSimpleName().toString().equals("afterBuildCenter")) {
+                hasAfterBuild = true;
                 break;
             }
         }
-        if (hasAfterInit) {
-            initCenter.addStatement("this.afterInitCenter(center, username)");
+        if (hasAfterBuild) {
+            buildCenter.addStatement("this.afterBuildCenter(exchange, params, currentTheme)");
         }
+        
+        buildCenter.addStatement("return io.jettra.flux.widgets.Column.of(centerWidgets.toArray(new io.jettra.flux.core.Widget[0]))");
 
-        classBuilder.addMethod(initCenter.build());
-
+        classBuilder.addMethod(buildCenter.build());
 
         JavaFile javaFile = JavaFile.builder(packageName, classBuilder.build()).build();
         try {
