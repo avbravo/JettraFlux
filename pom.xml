@@ -31,6 +31,11 @@
             <artifactId>JettraAnnotation</artifactId>
             <version>${jettra.annotation.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.jettra</groupId>
+            <artifactId>JettraRules</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
           <dependency>
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service</artifactId>

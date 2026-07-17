@@ -26,6 +26,19 @@ public abstract class Widget {
         return this;
     }
 
+    public Widget id(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Widget binding(String property) {
+        this.modifier.attribute("data-bind", property);
+        if (this.id.startsWith("esp-")) {
+            this.id = property;
+        }
+        return this;
+    }
+
     public Widget onClick(java.util.function.Consumer<Object> onClick) {
         this.onClick = onClick;
         return this;

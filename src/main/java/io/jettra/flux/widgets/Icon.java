@@ -136,7 +136,10 @@ public class Icon extends Widget {
 
     @Override
     public String render(ThemeData theme) {
-        if (iconClass != null && iconClass.trim().startsWith("<svg")) {
+        if (iconClass == null || iconClass.trim().isEmpty()) {
+            return "";
+        }
+        if (iconClass.trim().startsWith("<svg")) {
              String svgClasses = "jettra-icon-svg " + modifier.getClasses();
              String styles = modifier.getStyles();
              return "<span class=\"" + svgClasses.trim() + "\" style=\"" + styles + "\">" + iconClass + "</span>";
