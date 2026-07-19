@@ -140,12 +140,8 @@ public class Icon extends Widget {
             return "";
         }
         if (iconClass.trim().startsWith("<svg")) {
-             String svgClasses = "jettra-icon-svg " + modifier.getClasses();
-             String styles = modifier.getStyles();
-             return "<span class=\"" + svgClasses.trim() + "\" style=\"" + styles + "\">" + iconClass + "</span>";
+             return "<span " + renderCommonAttributes(theme, "jettra-icon-svg") + ">" + iconClass + "</span>";
         }
-        String finalClasses = iconClass + " " + modifier.getClasses();
-        String styles = modifier.getStyles();
-        return "<i class=\"" + finalClasses.trim() + "\" style=\"" + styles + "\"></i>";
+        return "<i " + renderCommonAttributes(theme, iconClass.trim()) + "></i>";
     }
 }
