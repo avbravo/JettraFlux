@@ -61,7 +61,7 @@ public class Login extends Widget {
             };
         }
         
-        Widget formContent = Card.of(Column.of(children)).modifier(new io.jettra.flux.core.Modifier().style("width: 400px; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid var(--surface-border, #ccc); background-color: var(--surface-color);"));
+        Widget formContent = Card.of(Column.of(children)).modifier(new io.jettra.flux.core.Modifier().style("width: 100%; max-width: 400px; box-sizing: border-box; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid var(--surface-border, #ccc); background-color: var(--surface-color);"));
 
         Widget form = Form.of(formContent).action(action).method("POST");
 

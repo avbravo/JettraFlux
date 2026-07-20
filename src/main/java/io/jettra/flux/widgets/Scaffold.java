@@ -40,7 +40,7 @@ public class Scaffold extends Widget {
         sb.append(".jettra-topbar { width: 100%; box-sizing: border-box; display: flex; align-items: center; padding: 0 16px; }\n");
         sb.append(".jettra-main-viewport { flex: 1; overflow: auto; padding: 16px; margin-top: -10px; box-sizing: border-box; display: flex; justify-content: center; }\n"); // Elevated position for visual balance
         sb.append(".jettra-hamburger { display: none; cursor: pointer; font-size: 24px; margin-right: 16px; }\n");
-        sb.append(".jettra-drawer { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; background: white; border: 1px solid #ccc; width: 250px; z-index: 1001; padding: 16px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }\n");
+        sb.append(".jettra-drawer { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; background: white; border: 1px solid #ccc; width: 100%; max-width: 250px; box-sizing: border-box; z-index: 1001; padding: 16px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }\n");
         sb.append(".jettra-drawer.open { display: flex; }\n");
         sb.append("@media (max-width: 768px) {\n");
         sb.append("  .jettra-hamburger { display: block; }\n");

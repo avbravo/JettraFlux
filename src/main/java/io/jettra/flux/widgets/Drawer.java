@@ -26,9 +26,9 @@ public class Drawer extends Widget {
             sb.append("</div>");
         }
         
-        String posStyle = "top:0; bottom:0; width:300px; " + position + ":0; transform: translateX(" + (position.equals("right") ? "100%" : "-100%") + ");";
-        if(position.equals("top")) posStyle = "top:0; left:0; right:0; height:300px; transform: translateY(-100%);";
-        else if(position.equals("bottom")) posStyle = "bottom:0; left:0; right:0; height:300px; transform: translateY(100%);";
+        String posStyle = "top:0; bottom:0; width:100%; max-width:300px; " + position + ":0; transform: translateX(" + (position.equals("right") ? "100%" : "-100%") + ");";
+        if(position.equals("top")) posStyle = "top:0; left:0; right:0; height:100%; max-height:300px; transform: translateY(-100%);";
+        else if(position.equals("bottom")) posStyle = "bottom:0; left:0; right:0; height:100%; max-height:300px; transform: translateY(100%);";
         
         sb.append("<div id=\"").append(id).append("\" class=\"jettra-drawer-comp\" style=\"position:fixed; background:var(--surface-color, #fff); z-index:2000; transition: transform 0.3s ease; box-shadow:0 0 15px rgba(0,0,0,0.2); ").append(posStyle).append("\">");
         sb.append("<div style=\"padding:15px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,0,0,0.1);\">");
