@@ -22,20 +22,31 @@ public class ThemeChanged extends Widget {
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
         
-        sb.append("<div class=\"espresso-theme-changed\" style=\"display: inline-flex; align-items: center; gap: 10px;\">\n");
-//        sb.append("  <label style=\"").append(theme.textStyle).append("\">Tema:</label>\n");
-        sb.append("  <select onchange=\"changeJettraTheme(this.value)\" style=\"padding: 6px; border-radius: 4px; background: ").append(theme.surfaceColor).append("; color: ").append(theme.onSurfaceColor).append("; border: 1px solid ").append(theme.primaryColor).append(";\">\n");
+        sb.append("<div class=\"espresso-theme-changed\" style=\"display: inline-block;\">\n");
         
         String[] themes = {"Ast", "FlatTheme", "Theme3D", "FuturisticTheme", "AtlantisTheme", "OceanTheme"};
-        for (String t : themes) {
-            sb.append("    <option value=\"").append(t).append("\"");
-            if (t.equals(currentTheme)) {
-                sb.append(" selected");
+        String[] logos = {"🪐", "🟦", "🧊", "🚀", "🔱", "🌊"};
+        
+        String currentLogo = "🎨";
+        for (int i = 0; i < themes.length; i++) {
+            if (themes[i].equals(currentTheme)) {
+                currentLogo = logos[i];
+                break;
             }
-            sb.append(">").append(t).append("</option>\n");
         }
         
-        sb.append("  </select>\n");
+        Widget trigger = Span.of(currentLogo)
+                .modifier(new io.jettra.flux.core.Modifier().attribute("title", currentTheme).style("cursor:pointer; font-size:1.5rem;"));
+        
+        WidgetLet[] items = new WidgetLet[themes.length];
+        for (int i = 0; i < themes.length; i++) {
+            items[i] = WidgetLet.of(themes[i] + " " + logos[i])
+                    .url("javascript:changeJettraTheme('" + themes[i] + "')");
+        }
+        
+        Widget menu = ((io.jettra.flux.widgets.OverlayMenu) OverlayMenu.of(items).trigger(trigger)).alignRight();
+        
+        sb.append(menu.render(theme));
         
         sb.append("  <script>\n");
         sb.append("    function changeJettraTheme(themeName) {\n");

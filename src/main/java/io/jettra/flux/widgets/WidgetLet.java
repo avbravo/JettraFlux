@@ -68,7 +68,11 @@ public class WidgetLet extends Widget {
         
         sb.append("<div style=\"display: flex; align-items: center; cursor: pointer; justify-content: space-between;\" ");
         if (url != null && !url.isEmpty()) {
-            sb.append("onclick=\"window.location.href='").append(url).append("'\" ");
+            if (url.startsWith("javascript:")) {
+                sb.append("onclick=\"").append(url.substring(11).replace("\"", "&quot;")).append("\" ");
+            } else {
+                sb.append("onclick=\"window.location.href='").append(url).append("'\" ");
+            }
         } else if (!children.isEmpty()) {
             if (popup) {
                 sb.append("onclick=\"var el = document.getElementById('").append(id).append("_children'); ")

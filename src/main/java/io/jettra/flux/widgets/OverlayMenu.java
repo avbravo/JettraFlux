@@ -7,6 +7,7 @@ public class OverlayMenu extends Widget {
     private final List<WidgetLet> items;
     private Widget trigger;
     private final String id;
+    private boolean alignRight = false;
     
     private OverlayMenu(List<WidgetLet> items) {
         this.items = items;
@@ -15,6 +16,11 @@ public class OverlayMenu extends Widget {
     public static OverlayMenu of(WidgetLet... items) { return new OverlayMenu(Arrays.asList(items)); }
     public OverlayMenu trigger(Widget trigger) { this.trigger = trigger; return this; }
     
+    public OverlayMenu alignRight() {
+        this.alignRight = true;
+        return this;
+    }
+    
     @Override public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
         sb.append("<div style=\"position: relative; display: inline-block;\">");
@@ -22,7 +28,8 @@ public class OverlayMenu extends Widget {
         if (trigger != null) sb.append(trigger.render(theme));
         sb.append("</div>");
         
-        sb.append("<div id=\"").append(id).append("\" class=\"jettra-overlaymenu\" ").append(renderCommonAttributes(theme, "espresso-overlaymenu")).append(" style=\"display:none; position:absolute; top:100%; left:0; margin-top:5px; background:var(--surface-color); padding:10px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); border:1px solid rgba(0,0,0,0.1); z-index:1000; min-width: 200px;\">");
+        String alignStyle = alignRight ? "right:0;" : "left:0;";
+        sb.append("<div id=\"").append(id).append("\" class=\"jettra-overlaymenu\" ").append(renderCommonAttributes(theme, "espresso-overlaymenu")).append(" style=\"display:none; position:absolute; top:100%; ").append(alignStyle).append(" margin-top:5px; background:var(--surface-color); padding:10px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); border:1px solid rgba(0,0,0,0.1); z-index:1000; min-width: 200px;\">");
         for (WidgetLet item : items) {
             item.popup(true);
             sb.append("<div style=\"margin-bottom: 5px;\">");

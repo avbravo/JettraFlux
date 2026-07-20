@@ -60,30 +60,27 @@ public class ErrorPage implements HttpHandler {
     }
 
     private Widget buildUI() {
-        // Container with 3D Effect
-        Widget icon = Div.of(io.jettra.flux.widgets.Text.of("⚠️"))
-                .modifier(new Modifier()
-                        .style("font-size: 80px; line-height: 1; margin-bottom: 20px; text-shadow: 0 10px 20px rgba(255, 68, 68, 0.5); transform: translateZ(30px);"));
+        Widget icon = io.jettra.flux.widgets.RawHtml.of("<div style='font-size: 80px; margin-bottom: 20px; animation: float 3s ease-in-out infinite;'>⚠️</div>");
 
         Widget title = Header.of(2, this.errorTitle)
                 .modifier(new Modifier()
-                        .style("color: #ff4444; margin: 0 0 15px 0; font-weight: 800; letter-spacing: 2px; transform: translateZ(20px);"));
+                        .style("color: #ff4444; margin: 0 0 15px 0; font-weight: 800; letter-spacing: 2px;"));
 
         Widget detail = Paragraph.of(this.errorDetail)
                 .modifier(new Modifier()
-                        .style("color: #cbd5e1; font-size: 18px; margin-bottom: 20px; line-height: 1.6; transform: translateZ(10px);"));
+                        .style("color: #94a3b8; font-size: 18px; margin-bottom: 30px; line-height: 1.6;"));
 
         Widget originBadge = Div.of(io.jettra.flux.widgets.Text.of("Origen del error: " + this.errorOrigin))
                 .modifier(new Modifier()
-                        .style("display: inline-block; background: rgba(255, 68, 68, 0.1); border: 1px dashed rgba(255, 68, 68, 0.4); color: #ff8888; padding: 8px 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin-bottom: 40px; transform: translateZ(10px);"));
+                        .style("display: inline-block; background: rgba(255, 68, 68, 0.1); border: 1px dashed rgba(255, 68, 68, 0.4); color: #ff8888; padding: 8px 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin-bottom: 40px;"));
 
-        Widget btnBack = io.jettra.flux.widgets.RawHtml.of("<a href='" + JettraServer.resolvePath(path) + "' style='text-decoration:none; display:inline-block; background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(204, 0, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.2); transition: all 0.2s; transform: translateZ(20px);'>Volver al Login</a>");
+        Widget btnBack = io.jettra.flux.widgets.RawHtml.of("<a href='" + JettraServer.resolvePath(path) + "' style='text-decoration:none; display:inline-block; background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(204, 0, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.2); transition: all 0.2s; position: relative; z-index: 1000;'>Volver al Login</a>");
 
         Widget btnContainer = Div.of(btnBack);
 
         Widget card = Div.of(icon, title, detail, originBadge, btnContainer)
                 .modifier(new Modifier()
-                        .style("background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)); backdrop-filter: blur(20px); border: 1px solid rgba(255, 68, 68, 0.3); border-radius: 20px; padding: 50px; width: 600px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 2px 2px rgba(255, 68, 68, 0.1), 0 0 40px rgba(255, 68, 68, 0.2); transform-style: preserve-3d; perspective: 1000px; text-align: center;"));
+                        .style("background: linear-gradient(145deg, rgba(30,41,59,0.95), rgba(15,23,42,0.95)); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); width: 100%; max-width: 600px; text-align: center;"));
 
         Widget container = Div.of(card)
                 .modifier(new Modifier()

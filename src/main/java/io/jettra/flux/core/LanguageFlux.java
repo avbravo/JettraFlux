@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@io.jettra.core.login.NoLoginRequired
 @Page(path = "/change-lang")
 public class LanguageFlux implements HttpHandler {
 
