@@ -23,7 +23,7 @@ public class ThemeChanged extends Widget {
         StringBuilder sb = new StringBuilder();
         
         sb.append("<div class=\"espresso-theme-changed\" style=\"display: inline-flex; align-items: center; gap: 10px;\">\n");
-        sb.append("  <label style=\"").append(theme.textStyle).append("\">Tema:</label>\n");
+//        sb.append("  <label style=\"").append(theme.textStyle).append("\">Tema:</label>\n");
         sb.append("  <select onchange=\"changeJettraTheme(this.value)\" style=\"padding: 6px; border-radius: 4px; background: ").append(theme.surfaceColor).append("; color: ").append(theme.onSurfaceColor).append("; border: 1px solid ").append(theme.primaryColor).append(";\">\n");
         
         String[] themes = {"Ast", "FlatTheme", "Theme3D", "FuturisticTheme", "AtlantisTheme", "OceanTheme"};
