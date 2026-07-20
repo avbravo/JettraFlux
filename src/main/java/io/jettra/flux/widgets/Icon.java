@@ -124,6 +124,21 @@ public class Icon extends Widget {
         public static final String STAR = "<svg fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"w-6 h-6\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z\"/></svg>";
     }
 
+    public static class Material {
+        public static final String HOME = "material-symbols-outlined home";
+        public static final String SEARCH = "material-symbols-outlined search";
+        public static final String SETTINGS = "material-symbols-outlined settings";
+        public static final String PERSON = "material-symbols-outlined person";
+        public static final String MAIL = "material-symbols-outlined mail";
+        public static final String NOTIFICATIONS = "material-symbols-outlined notifications";
+        public static final String FAVORITE = "material-symbols-outlined favorite";
+        public static final String DELETE = "material-symbols-outlined delete";
+        public static final String EDIT = "material-symbols-outlined edit";
+        public static final String ADD = "material-symbols-outlined add";
+        public static final String DONE = "material-symbols-outlined done";
+        public static final String CLOSE = "material-symbols-outlined close";
+    }
+
     private final String iconClass;
 
     private Icon(String iconClass) {
@@ -141,6 +156,12 @@ public class Icon extends Widget {
         }
         if (iconClass.trim().startsWith("<svg")) {
              return "<span " + renderCommonAttributes(theme, "jettra-icon-svg") + ">" + iconClass + "</span>";
+        }
+        if (iconClass.trim().startsWith("material-symbols")) {
+             String[] parts = iconClass.trim().split(" ", 2);
+             if (parts.length == 2) {
+                 return "<span " + renderCommonAttributes(theme, parts[0]) + ">" + parts[1] + "</span>";
+             }
         }
         return "<i " + renderCommonAttributes(theme, iconClass.trim()) + "></i>";
     }
