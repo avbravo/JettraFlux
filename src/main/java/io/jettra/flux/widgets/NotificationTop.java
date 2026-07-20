@@ -76,6 +76,33 @@ public class NotificationTop extends Widget {
         }
         return this;
     }
+    
+    public static void broadcast(String idnotification, NotificationTopType targetType, String message) {
+        io.jettra.server.core.JettraContext ctx = io.jettra.server.core.JettraContext.getCurrent();
+        String currentSessionId = ctx != null ? ctx.getSessionId() : null;
+        
+        java.util.Map<String, java.util.Map<String, Object>> allSessions = io.jettra.server.core.JettraContext.getSessions();
+        if (allSessions == null) return;
+        
+        for (java.util.Map.Entry<String, java.util.Map<String, Object>> entry : allSessions.entrySet()) {
+            boolean isCurrentUser = entry.getKey().equals(currentSessionId);
+            
+            if (targetType == NotificationTopType.PERSONAL && !isCurrentUser) continue;
+            if (targetType == NotificationTopType.CHANNEL && isCurrentUser) continue;
+            
+            java.util.Map<String, Object> sessionVars = entry.getValue();
+            if (sessionVars != null) {
+                java.util.Map<String, NotificationTop> notifs = (java.util.Map<String, NotificationTop>) sessionVars.get("template_notifications");
+                if (notifs != null) {
+                    NotificationTop nt = notifs.get(idnotification);
+                    if (nt != null && nt.getType() == targetType) {
+                        nt.value = (nt.value != null ? nt.value : 0) + 1;
+                        nt.addMessage(message);
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public NotificationTop binding(String property) {
