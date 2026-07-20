@@ -77,11 +77,7 @@ public class ErrorPage implements HttpHandler {
                 .modifier(new Modifier()
                         .style("display: inline-block; background: rgba(255, 68, 68, 0.1); border: 1px dashed rgba(255, 68, 68, 0.4); color: #ff8888; padding: 8px 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin-bottom: 40px; transform: translateZ(10px);"));
 
-        Widget btnBack = Button.of("Volver al Login")
-                .attribute("onclick", "window.location.href='" + JettraServer.resolvePath(path) + "'")
-                .modifier(new Modifier()
-                        .cssClass("btn-error")
-                        .style("background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(204, 0, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.2); transition: all 0.2s; transform: translateZ(20px);"));
+        Widget btnBack = io.jettra.flux.widgets.RawHtml.of("<a href='" + JettraServer.resolvePath(path) + "' style='text-decoration:none; display:inline-block; background: linear-gradient(135deg, #ff4444, #cc0000); color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(204, 0, 0, 0.4), inset 0 2px 0 rgba(255,255,255,0.2); transition: all 0.2s; transform: translateZ(20px);'>Volver al Login</a>");
 
         Widget btnContainer = Div.of(btnBack);
 

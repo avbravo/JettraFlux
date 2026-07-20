@@ -1,0 +1,47 @@
+package io.jettra.flux.core;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import io.jettra.core.server.Page;
+import io.jettra.server.JettraServer;
+import io.jettra.server.core.JettraContext;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@io.jettra.core.login.NoLoginRequired
+@Page(path = "/change-lang")
+public class LanguageFlux implements HttpHandler {
+
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        String query = exchange.getRequestURI().getQuery();
+        Map<String, String> params = new HashMap<>();
+        if (query != null) {
+            for (String pair : query.split("&")) {
+                String[] kv = pair.split("=");
+                if (kv.length == 2) params.put(kv[0], kv[1]);
+            }
+        }
+        
+        String lang = params.getOrDefault("lang", "en");
+        changeLanguage(exchange, lang);
+        
+        String referer = exchange.getRequestHeaders().getFirst("Referer");
+        String redirectUrl = (referer != null) ? referer : JettraServer.resolvePath("/dashboard");
+        
+        exchange.getResponseHeaders().set("Location", redirectUrl);
+        exchange.sendResponseHeaders(302, -1);
+        exchange.getResponseBody().close();
+    }
+
+    public static void changeLanguage(HttpExchange exchange, String lang) {
+        String cPath = JettraServer.getContextPath();
+        if (cPath == null || cPath.isEmpty()) cPath = "/";
+        exchange.getResponseHeaders().add("Set-Cookie", "jettra_lang=" + lang + "; Path=" + cPath + "; Max-Age=31536000");
+        if (JettraContext.getCurrent() != null) {
+            JettraContext.getCurrent().set(JettraContext.Scope.SESSION, "jettra_lang", lang);
+        }
+    }
+}
