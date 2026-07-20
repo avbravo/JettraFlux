@@ -39,7 +39,15 @@ public class Avatar extends Widget {
         String style = "position: relative; display: inline-flex; align-items: center; justify-content: center; width: " + dim + "; height: " + dim + "; border-radius: " + br + "; background-color: " + bgColor + "; color: var(--text-color); font-size: " + fontS + ";";
         
         StringBuilder sb = new StringBuilder();
-        sb.append("<div ").append(renderCommonAttributes(theme, "espresso-avatar")).append(" style=\"").append(style).append("\">");
+        sb.append("<div id=\"").append(id).append("\" class=\"espresso-avatar ").append(modifier.getClasses()).append("\" ");
+        sb.append("style=\"").append(style).append(" ").append(modifier.getStyles()).append("\" ");
+        for (java.util.Map.Entry<String, String> entry : modifier.getAttributes().entrySet()) {
+            sb.append(entry.getKey()).append("=\"").append(entry.getValue()).append("\" ");
+        }
+        if (onClick != null) {
+            sb.append("onclick=\"espressoFire('").append(id).append("')\" ");
+        }
+        sb.append(">");
         if (image != null && !image.isEmpty()) {
             sb.append("<img src=\"").append(image).append("\" style=\"width:100%; height:100%; object-fit:cover; border-radius:inherit;\" />");
         } else if (icon != null && !icon.isEmpty()) {
