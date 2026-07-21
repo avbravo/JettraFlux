@@ -8,6 +8,8 @@ import java.util.List;
 public class Alert extends Widget {
     private final List<Widget> children;
 
+    private String severity = "info";
+
     private Alert(List<Widget> children) {
         this.children = children;
     }
@@ -16,10 +18,16 @@ public class Alert extends Widget {
         return new Alert(Arrays.asList(children));
     }
 
+    public Alert severity(String severity) {
+        this.severity = severity;
+        return this;
+    }
+
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<div ").append(renderCommonAttributes(theme, "espresso-alert")).append(">\n");
+        String cssClass = "espresso-alert espresso-alert-" + severity;
+        sb.append("<div ").append(renderCommonAttributes(theme, cssClass)).append(">\n");
         for (Widget child : children) {
             sb.append(child.render(theme));
         }
