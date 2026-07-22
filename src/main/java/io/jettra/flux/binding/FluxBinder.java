@@ -8,9 +8,15 @@ import io.jettra.rules.core.RuleResult;
 
 public class FluxBinder {
     private final Object model;
+    private java.util.Properties messages;
     
     public FluxBinder(Object model) {
         this.model = model;
+    }
+    
+    public FluxBinder messages(java.util.Properties messages) {
+        this.messages = messages;
+        return this;
     }
     
     public FluxBinder bind(Map<String, String> params) {
@@ -26,11 +32,26 @@ public class FluxBinder {
                     if (type == String.class) {
                         field.set(model, valueStr);
                     } else if (type == Integer.class || type == int.class) {
-                        field.set(model, Integer.parseInt(valueStr));
+                        if (valueStr == null || valueStr.trim().isEmpty()) {
+                            if (type == Integer.class) field.set(model, null);
+                            else field.set(model, 0);
+                        } else {
+                            field.set(model, Integer.parseInt(valueStr.trim()));
+                        }
                     } else if (type == Double.class || type == double.class) {
-                        field.set(model, Double.parseDouble(valueStr));
+                        if (valueStr == null || valueStr.trim().isEmpty()) {
+                            if (type == Double.class) field.set(model, null);
+                            else field.set(model, 0.0);
+                        } else {
+                            field.set(model, Double.parseDouble(valueStr.trim()));
+                        }
                     } else if (type == Long.class || type == long.class) {
-                        field.set(model, Long.parseLong(valueStr));
+                        if (valueStr == null || valueStr.trim().isEmpty()) {
+                            if (type == Long.class) field.set(model, null);
+                            else field.set(model, 0L);
+                        } else {
+                            field.set(model, Long.parseLong(valueStr.trim()));
+                        }
                     } else if (type == Boolean.class || type == boolean.class) {
                         field.set(model, Boolean.parseBoolean(valueStr));
                     }
@@ -45,10 +66,10 @@ public class FluxBinder {
     public java.util.List<RuleResult> validate() {
         if (model == null) {
             java.util.List<RuleResult> err = new java.util.ArrayList<>();
-            err.add(new RuleResult(true, "Model", "Model is null"));
+            err.add(new RuleResult(false, "Model is null", "Model"));
             return err;
         }
-        return JettraRulesEngine.validate(model);
+        return JettraRulesEngine.validate(model, messages);
     }
     
     public FluxBinder compute() {

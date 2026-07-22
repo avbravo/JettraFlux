@@ -32,9 +32,25 @@ public abstract class Widget {
     }
 
     public Widget binding(String property) {
-        this.modifier.attribute("data-bind", property);
-        if (this.id.startsWith("esp-")) {
-            this.id = property;
+        if (property != null && !property.isEmpty()) {
+            this.modifier.attribute("data-bind", property);
+            if (this.id == null || this.id.startsWith("esp-")) {
+                this.id = property;
+            }
+        }
+        return this;
+    }
+
+    public Widget binding(Object property) {
+        if (property != null) {
+            return binding(property.toString());
+        }
+        return this;
+    }
+
+    public Widget value(Object value) {
+        if (value != null) {
+            this.modifier.attribute("value", value.toString());
         }
         return this;
     }

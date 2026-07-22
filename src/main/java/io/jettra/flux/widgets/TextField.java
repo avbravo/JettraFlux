@@ -7,6 +7,8 @@ public class TextField extends Widget {
     private final String placeholder;
     private final String name;
 
+    private String value = "";
+
     private TextField(String name, String placeholder) {
         this.name = name;
         this.placeholder = placeholder;
@@ -16,9 +18,27 @@ public class TextField extends Widget {
         return new TextField(name, placeholder);
     }
 
+    public TextField value(Object value) {
+        this.value = value != null ? value.toString() : "";
+        return this;
+    }
+
+    @Override
+    public TextField binding(String property) {
+        super.binding(property);
+        return this;
+    }
+
+    @Override
+    public TextField binding(Object property) {
+        super.binding(property);
+        return this;
+    }
+
     @Override
     public String render(ThemeData theme) {
         String inputStyle = "padding: 12px; border: 1px solid " + theme.primaryColor + "; border-radius: 4px; outline: none; background: transparent; color: " + theme.onSurfaceColor + "; font-size: 16px; width: 100%; box-sizing: border-box;";
-        return "<input type=\"text\" name=\"" + name + "\" placeholder=\"" + placeholder + "\" " + renderCommonAttributes(theme, "espresso-textfield") + " style=\"" + inputStyle + " " + modifier.getStyles() + "\" />";
+        String valAttr = (value != null && !value.isEmpty()) ? " value=\"" + value.replace("\"", "&quot;") + "\"" : "";
+        return "<input type=\"text\" name=\"" + name + "\"" + valAttr + " placeholder=\"" + placeholder + "\" " + renderCommonAttributes(theme, "espresso-textfield") + " style=\"" + inputStyle + " " + modifier.getStyles() + "\" />";
     }
 }
