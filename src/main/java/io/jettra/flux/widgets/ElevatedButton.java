@@ -21,8 +21,7 @@ public class ElevatedButton extends Widget {
     @Override
     public String render(ThemeData theme) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<button ").append(renderCommonAttributes(theme, "espresso-button"))
-          .append(" style=\"").append(theme.buttonStyle).append(" ").append(modifier.getStyles()).append("\">\n");
+        sb.append("<button ").append(renderCommonAttributes(theme, "espresso-button", theme.buttonStyle)).append(">\n");
         if (child != null) {
             sb.append(child.render(theme));
         }

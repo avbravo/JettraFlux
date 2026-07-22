@@ -17,6 +17,16 @@ public abstract class Widget {
     }
 
     public Widget modifier(Modifier modifier) {
+        if (this.modifier != null && modifier != null) {
+            java.util.Map<String, String> existingAttrs = this.modifier.getAttributes();
+            if (!existingAttrs.isEmpty()) {
+                for (java.util.Map.Entry<String, String> entry : existingAttrs.entrySet()) {
+                    if (!modifier.getAttributes().containsKey(entry.getKey())) {
+                        modifier.attribute(entry.getKey(), entry.getValue());
+                    }
+                }
+            }
+        }
         this.modifier = modifier;
         return this;
     }
@@ -73,6 +83,10 @@ public abstract class Widget {
      * Helper to render common attributes like id, classes, styles, and onClick handlers.
      */
     protected String renderCommonAttributes(ThemeData theme, String defaultClasses) {
+        return renderCommonAttributes(theme, defaultClasses, "");
+    }
+
+    protected String renderCommonAttributes(ThemeData theme, String defaultClasses, String defaultStyles) {
         StringBuilder sb = new StringBuilder();
         sb.append("id=\"").append(id).append("\" ");
         
@@ -81,9 +95,9 @@ public abstract class Widget {
             sb.append("class=\"").append(finalClasses.trim()).append("\" ");
         }
 
-        String finalStyles = modifier.getStyles();
-        if (!finalStyles.isEmpty()) {
-            sb.append("style=\"").append(finalStyles).append("\" ");
+        String combinedStyles = ((defaultStyles != null ? defaultStyles : "") + " " + modifier.getStyles()).trim();
+        if (!combinedStyles.isEmpty()) {
+            sb.append("style=\"").append(combinedStyles).append("\" ");
         }
 
         if (onClick != null) {
