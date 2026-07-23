@@ -80,6 +80,43 @@ public class ThemeData {
                "    left: 0;\n" +
                "  }\n" +
                "}\n" +
+               "/* JettraAlert Styling */\n" +
+               ".espresso-alert {\n" +
+               "  padding: 14px 18px;\n" +
+               "  border-radius: 8px;\n" +
+               "  margin-bottom: 20px;\n" +
+               "  font-weight: 500;\n" +
+               "  display: flex;\n" +
+               "  flex-direction: column;\n" +
+               "  align-items: flex-start;\n" +
+               "  gap: 4px;\n" +
+               "  width: 100%;\n" +
+               "  box-sizing: border-box;\n" +
+               "}\n" +
+               ".espresso-alert-danger {\n" +
+               "  background-color: rgba(239, 68, 68, 0.15) !important;\n" +
+               "  border: 1px solid rgba(239, 68, 68, 0.4) !important;\n" +
+               "  color: #f87171 !important;\n" +
+               "}\n" +
+               ".espresso-alert-danger h1, .espresso-alert-danger h2, .espresso-alert-danger h3, .espresso-alert-danger h4, .espresso-alert-danger p, .espresso-alert-danger span, .espresso-alert-danger div {\n" +
+               "  color: #f87171 !important;\n" +
+               "}\n" +
+               ".espresso-alert-success {\n" +
+               "  background-color: rgba(16, 185, 129, 0.15) !important;\n" +
+               "  border: 1px solid rgba(16, 185, 129, 0.4) !important;\n" +
+               "  color: #34d399 !important;\n" +
+               "}\n" +
+               ".espresso-alert-success h1, .espresso-alert-success h2, .espresso-alert-success h3, .espresso-alert-success h4, .espresso-alert-success p, .espresso-alert-success span, .espresso-alert-success div {\n" +
+               "  color: #34d399 !important;\n" +
+               "}\n" +
+               ".espresso-alert-info {\n" +
+               "  background-color: rgba(59, 130, 246, 0.15) !important;\n" +
+               "  border: 1px solid rgba(59, 130, 246, 0.4) !important;\n" +
+               "  color: #60a5fa !important;\n" +
+               "}\n" +
+               ".espresso-alert-info h1, .espresso-alert-info h2, .espresso-alert-info h3, .espresso-alert-info h4, .espresso-alert-info p, .espresso-alert-info span, .espresso-alert-info div {\n" +
+               "  color: #60a5fa !important;\n" +
+               "}\n" +
                "</style>\n";
     }
 }
