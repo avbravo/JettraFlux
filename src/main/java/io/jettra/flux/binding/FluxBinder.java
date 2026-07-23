@@ -102,13 +102,21 @@ public class FluxBinder {
         return webRulesWidget(formId, "", "", "showToast");
     }
 
+    public static String generateWebRulesScript(Class<?> modelClass, String formId, String inputPrefix, String inputSuffix, String toastFunctionName) {
+        return io.jettra.rules.core.JettraRulesEngine.generateWebRulesScript(modelClass, formId, inputPrefix, inputSuffix, toastFunctionName);
+    }
+
     public static String generateWebRulesScript(Class<?> modelClass, String formId) {
-        return io.jettra.rules.core.JettraRulesEngine.generateWebRulesScript(modelClass, formId, "", "", "showToast");
+        return generateWebRulesScript(modelClass, formId, "", "", "showToast");
+    }
+
+    public static io.jettra.flux.core.Widget generateWebRulesWidget(Class<?> modelClass, String formId, String inputPrefix, String inputSuffix, String toastFunctionName) {
+        String js = generateWebRulesScript(modelClass, formId, inputPrefix, inputSuffix, toastFunctionName);
+        return io.jettra.flux.widgets.RawScript.of(js);
     }
 
     public static io.jettra.flux.core.Widget generateWebRulesWidget(Class<?> modelClass, String formId) {
-        String js = generateWebRulesScript(modelClass, formId);
-        return io.jettra.flux.widgets.RawScript.of(js);
+        return generateWebRulesWidget(modelClass, formId, "", "", "showToast");
     }
 
     public Object getModel() {

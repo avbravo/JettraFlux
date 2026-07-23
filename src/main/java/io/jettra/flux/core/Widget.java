@@ -44,8 +44,22 @@ public abstract class Widget {
     public Widget binding(String property) {
         if (property != null && !property.isEmpty()) {
             this.modifier.attribute("data-bind", property);
+            this.modifier.attribute("name", property);
             if (this.id == null || this.id.startsWith("esp-")) {
                 this.id = property;
+            }
+        }
+        return this;
+    }
+
+    public Widget binding(Class<?> modelClass, String property) {
+        binding(property);
+        if (modelClass != null && property != null && !property.isEmpty()) {
+            java.util.Map<String, String> htmlAttrs = io.jettra.rules.core.JettraRulesWebEngine.getHtmlAttributes(modelClass, property);
+            for (java.util.Map.Entry<String, String> entry : htmlAttrs.entrySet()) {
+                if (!this.modifier.getAttributes().containsKey(entry.getKey())) {
+                    this.modifier.attribute(entry.getKey(), entry.getValue());
+                }
             }
         }
         return this;

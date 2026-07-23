@@ -112,7 +112,15 @@ public class NotificationTop extends Widget {
 
     @Override
     public String render(ThemeData theme) {
-        String tooltip = (label != null && !label.isEmpty()) ? "title=\"" + label + "\"" : "";
+        String tooltipText;
+        if (label != null && !label.isEmpty()) {
+            tooltipText = label;
+        } else if (messages == null || messages.isEmpty()) {
+            tooltipText = "No hay notificaciones";
+        } else {
+            tooltipText = messages.get(0);
+        }
+        String tooltip = "title=\"" + tooltipText.replace("\"", "&quot;") + "\"";
         
         Widget badge = null;
         if (value != null && value > 0) {
@@ -136,18 +144,6 @@ public class NotificationTop extends Widget {
         
         Widget trigger = RawHtml.of(triggerHtml.toString());
         
-        WidgetLet[] items = new WidgetLet[messages.isEmpty() ? 1 : messages.size()];
-        if (messages.isEmpty()) {
-            items[0] = WidgetLet.of("No hay notificaciones").icon("fas fa-info-circle");
-        } else {
-            for (int i = 0; i < messages.size(); i++) {
-                items[i] = WidgetLet.of(messages.get(i)).icon("fas fa-envelope");
-            }
-        }
-        
-        // Alineación a la izquierda explícita
-        Widget menu = OverlayMenu.of(items).trigger(trigger).modifier(new io.jettra.flux.core.Modifier().style("text-align: left;"));
-        
         String bindAttr = modifier.getAttributes().get("data-bind");
         String bindId = (bindAttr != null && !bindAttr.isEmpty()) ? bindAttr : id;
 
@@ -159,7 +155,17 @@ public class NotificationTop extends Widget {
           .append("data-nt-label=\"").append(label != null ? label : "").append("\" ")
           .append(">");
           
-        sb.append(menu.render(theme));
+        if (messages == null || messages.isEmpty()) {
+            // Display trigger icon with Tooltip 'No hay notificaciones' on hover
+            sb.append(trigger.render(theme));
+        } else {
+            WidgetLet[] items = new WidgetLet[messages.size()];
+            for (int i = 0; i < messages.size(); i++) {
+                items[i] = WidgetLet.of(messages.get(i)).icon("fas fa-envelope");
+            }
+            Widget menu = OverlayMenu.of(items).trigger(trigger).modifier(new io.jettra.flux.core.Modifier().style("text-align: left;"));
+            sb.append(menu.render(theme));
+        }
         
         // Auto-refresh mechanism
         sb.append("<script>")

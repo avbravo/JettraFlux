@@ -39,6 +39,7 @@ public class TextField extends Widget {
     public String render(ThemeData theme) {
         String inputStyle = "padding: 12px; border: 1px solid " + theme.primaryColor + "; border-radius: 4px; outline: none; background: transparent; color: " + theme.onSurfaceColor + "; font-size: 16px; width: 100%; box-sizing: border-box;";
         String valAttr = (value != null && !value.isEmpty()) ? " value=\"" + value.replace("\"", "&quot;") + "\"" : "";
-        return "<input type=\"text\" name=\"" + name + "\"" + valAttr + " placeholder=\"" + placeholder + "\" " + renderCommonAttributes(theme, "espresso-textfield") + " style=\"" + inputStyle + " " + modifier.getStyles() + "\" />";
+        String inputName = modifier.getAttributes().containsKey("name") ? modifier.getAttributes().remove("name") : name;
+        return "<input type=\"text\" name=\"" + inputName + "\"" + valAttr + " placeholder=\"" + placeholder + "\" " + renderCommonAttributes(theme, "espresso-textfield") + " style=\"" + inputStyle + " " + modifier.getStyles() + "\" />";
     }
 }
