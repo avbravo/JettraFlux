@@ -82,7 +82,35 @@ public class FluxBinder {
         }
         return this;
     }
-    
+
+    public String webRulesScript(String formId, String inputPrefix, String inputSuffix, String toastFunctionName) {
+        if (model == null) return "";
+        Class<?> clazz = (model instanceof Class<?>) ? (Class<?>) model : model.getClass();
+        return io.jettra.rules.core.JettraRulesEngine.generateWebRulesScript(clazz, formId, inputPrefix, inputSuffix, toastFunctionName);
+    }
+
+    public String webRulesScript(String formId) {
+        return webRulesScript(formId, "", "", "showToast");
+    }
+
+    public io.jettra.flux.core.Widget webRulesWidget(String formId, String inputPrefix, String inputSuffix, String toastFunctionName) {
+        String js = webRulesScript(formId, inputPrefix, inputSuffix, toastFunctionName);
+        return io.jettra.flux.widgets.RawScript.of(js);
+    }
+
+    public io.jettra.flux.core.Widget webRulesWidget(String formId) {
+        return webRulesWidget(formId, "", "", "showToast");
+    }
+
+    public static String generateWebRulesScript(Class<?> modelClass, String formId) {
+        return io.jettra.rules.core.JettraRulesEngine.generateWebRulesScript(modelClass, formId, "", "", "showToast");
+    }
+
+    public static io.jettra.flux.core.Widget generateWebRulesWidget(Class<?> modelClass, String formId) {
+        String js = generateWebRulesScript(modelClass, formId);
+        return io.jettra.flux.widgets.RawScript.of(js);
+    }
+
     public Object getModel() {
         return model;
     }
