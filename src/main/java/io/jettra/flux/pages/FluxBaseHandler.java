@@ -262,6 +262,12 @@ public abstract class FluxBaseHandler implements HttpHandler {
     }
 
     protected String getLoggedUser(HttpExchange exchange) {
+        if (JettraContext.getCurrent() != null) {
+            Object userObj = JettraContext.getCurrent().get(JettraContext.Scope.SESSION, "username");
+            if (userObj != null && !userObj.toString().trim().isEmpty()) {
+                return userObj.toString();
+            }
+        }
         // Simple cookie parse
         String cookies = exchange.getRequestHeaders().getFirst("Cookie");
         if (cookies != null) {
@@ -276,6 +282,12 @@ public abstract class FluxBaseHandler implements HttpHandler {
     }
 
     protected String getLoggedRole(HttpExchange exchange) {
+        if (JettraContext.getCurrent() != null) {
+            Object roleObj = JettraContext.getCurrent().get(JettraContext.Scope.SESSION, "role");
+            if (roleObj != null && !roleObj.toString().trim().isEmpty()) {
+                return roleObj.toString();
+            }
+        }
         // Simple cookie parse for role
         String cookies = exchange.getRequestHeaders().getFirst("Cookie");
         if (cookies != null) {
@@ -290,6 +302,12 @@ public abstract class FluxBaseHandler implements HttpHandler {
     }
 
     protected String getLoggedDepartment(HttpExchange exchange) {
+        if (JettraContext.getCurrent() != null) {
+            Object deptObj = JettraContext.getCurrent().get(JettraContext.Scope.SESSION, "department");
+            if (deptObj != null) {
+                return deptObj.toString();
+            }
+        }
         String cookies = exchange.getRequestHeaders().getFirst("Cookie");
         if (cookies != null) {
             for (String c : cookies.split(";")) {
